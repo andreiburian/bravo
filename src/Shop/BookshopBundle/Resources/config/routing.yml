@@ -1,21 +1,44 @@
 shop_bookshop_homepage:
     pattern:  /
     defaults: { _controller: ShopBookshopBundle:Page:index }
+
 shop_bookshop_category:
     pattern:  /category/
     defaults: { _controller: ShopBookshopBundle:Page:category }
     requirements:
         _method:  GET|POST
         id: \d+
+
 shop_bookshop_cart:
     pattern:  /cart/
     defaults: { _controller: ShopBookshopBundle:Cart:cartPage }
     requirements:
         _method:  GET|POST
         id: \d+
-shop_bookshop_remove:
-    pattern:  /cart/remove
-    defaults: { _controller: ShopBookshopBundle:Cart:removeItem }
-    requirements:
-        _method: POST
-        id: \d+        
+
+shop_bookshop_removeProduct:
+  pattern: removeProduct/{cartItemId}
+  defaults: { _controller: ShopBookshopBundle:Cart:removeProduct}
+  requirements:
+        _method:  GET
+        id: \d+
+
+shop_bookshop_emptyCart:
+  pattern: emptyCart/{cartId}
+  defaults: { _controller: ShopBookshopBundle:Cart:emptyCart}
+  requirements:
+        _method:  GET
+        id: \d+
+
+shop_bookshop_addProduct:
+  pattern: addProduct/
+  defaults: { _controller: ShopBookshopBundle:Cart:addProduct}
+  requirements:
+        _method:  POST 
+        
+shop_bookshop_updateCart:
+  pattern: updateCart/
+  defaults: { _controller: ShopBookshopBundle:Cart:updateCart}
+  requirements:
+        _method:  POST         
+ 

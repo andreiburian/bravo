@@ -7,6 +7,14 @@
     <div class="main">
         <div class="col-main">
             <div class="cart">
+                {% if cart[0].cartItems|length ==0  %}
+                    <center>
+                        <p style="font-size:24px"> Your cart is currently empty </p>
+                        <a href="{{path('shop_bookshop_homepage')}}">
+                            <button type="button" title="Continue Shopping" class="button btn-continue" ><span><span>Continue Shopping</span></span></button>
+                        </a>
+                    </center>            
+                {% else %}
                 <div class="page-title title-buttons">
                     <h1>Shopping Cart</h1>
                     <ul class="checkout-types">
@@ -15,17 +23,7 @@
                         </li>
                     </ul>
                 </div>
-                {#
-                <ul class="messages">
-                    <li class="success-msg">
-                        <ul>
-                            <li><span>Coalesce: Functioning On Impatience T-Shirt was added to your shopping cart.</span></li>
-                        </ul>
-                    </li>
-                </ul>
-                #}
-                
-                <form action="" method="post">
+                <form action="{{ path('shop_bookshop_updateCart') }}" method="post">
                     <fieldset>
                         <table id="shopping-cart-table" class="data-table cart-table">
                             <colgroup>
@@ -54,12 +52,14 @@
                                         <button type="button" title="Continue Shopping" class="button btn-continue" ><span><span>Continue Shopping</span></span></button>
                                         </a>
                                         <button type="submit" name="update_cart_action" value="update_qty" title="Update Shopping Cart" class="button btn-update"><span><span>Update Shopping Cart</span></span></button>
-                                        <button type="submit" name="update_cart_action" value="empty_cart" title="Clear Shopping Cart" class="button btn-empty" id="empty_cart_button"><span><span>Clear Shopping Cart</span></span></button>
+                                        <a href="{{ path('shop_bookshop_emptyCart',{'cartId': cart[0].id}) }}">    
+                                        <button type="button" name="update_cart_action" value="empty_cart" title="Clear Shopping Cart" class="button btn-empty" id="empty_cart_button"><span><span>Clear Shopping Cart</span></span></button>
+                                        </a>
                                     </td>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                {% for cartItem in cart[0].cartItems %}
+                                {% for cartItem in cart[0].cartItems|reverse %}
                                     <tr class="{{cycle(['last even','first odd'], loop.index)}}" >
                                         <td>
                                             <a href="product_detail.html" title="{{cartItem.product.title}}" class="product-image">
@@ -77,7 +77,7 @@
                                             </span>
                                         </td>
                                         <td class="a-center">
-                                            <input name="qty" value="{{cartItem.quantity}}" size="4" title="Qty" class="input-text qty" maxlength="12" />
+                                            <input name="qty[{{cartItem.id}}]" value="{{cartItem.quantity}}" size="4" title="Qty" class="input-text qty" maxlength="12" />
                                         </td>
                                         <td class="a-right">
                                             <span class="cart-price">
@@ -85,7 +85,7 @@
                                             </span>
                                         </td>
                                         <td class="a-center last">
-                                            <a href="{{ path('shop_bookshop_remove',{'id': cartItem.id}) }}" title="Remove item" class="btn-remove btn-remove2">Remove item</a>
+                                            <a href="{{ path('shop_bookshop_removeProduct',{'cartItemId': cartItem.id}) }}" title="Remove item" class="btn-remove btn-remove2">Remove item</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -119,6 +119,7 @@
                         </ul>
                     </div>
                 </div>
+            {% endif %}    
             </div>
         </div>
     </div>

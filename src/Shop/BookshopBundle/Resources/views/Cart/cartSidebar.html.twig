@@ -25,14 +25,15 @@
             <p class="block-subtitle">Recently added item(s)</p>
 
             <ol id="cart-sidebar" class="mini-products-list">
-                {% if noItems>3 %}{% set noItems=3 %}{% endif %}
-                {% for i in range(0, noItems-1) %}
+                {% set limit=0 %}
+                {% if noItems>3 %}{% set limit=noItems-3 %}{% endif %}
+                {% for i in range( noItems-1, limit) %}
                     <li class="item">
                         <a href="#" title="{{ cart[0].cartItems[i].title }}" class="product-image">
                             <img src={{ asset('bundles/shopbookshop/image/'~cart[0].cartItems[i].product.image) }} width="50" height="50" alt="{{ cart[0].cartItems[i].title }}" />
                         </a>
                         <div class="product-details">
-                            <a href="#" title="Remove This Item" class="btn-remove">Remove This Item</a>
+                            <a href="{{ path('shop_bookshop_removeProduct',{'cartItemId': cart[0].cartItems[i].id}) }}" title="Remove This Item" class="btn-remove">Remove This Item</a>
                             <a href="{{ path('shop_bookshop_cart') }}" title="Edit item" class="btn-edit">Edit item</a>
                             <p class="product-name"><a href="#">{{ cart[0].cartItems[i].title }}</a></p>
                             <strong>{{ cart[0].cartItems[i].quantity }}</strong> x
@@ -40,10 +41,8 @@
                         </div>
                     </li>
                 {% endfor %}
-                
             </ol>
         {% endif %}    
-        
         </div>
     </div>
 </div>    

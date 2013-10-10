@@ -25,7 +25,7 @@ class CartItem
     protected $cart;
 
     /**
-     * @ORM\OneToOne(targetEntity="Product", inversedBy="cartItem")
+     * @ORM\OneToOne(targetEntity="Product", inversedBy="cartItem", cascade={"persist"})
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
@@ -45,6 +45,16 @@ class CartItem
      */
     protected $price;
 
+    function __construct($cart, $product, $title, $quantity, $price)
+    {
+        $this->cart = $cart;
+        $this->product = $product;
+        $this->title = $title;
+        $this->quantity = $quantity;
+        $this->price = $price;
+    }
+
+    
     /**
      * Get id
      *

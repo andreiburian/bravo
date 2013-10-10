@@ -76,9 +76,13 @@
 
                                 {% if product.active>0 %}
                                 <div class="actions">
-                                    <button type="button" title="Add to Cart" class="button btn-cart" >
-                                        <span><span>Add to Cart</span></span>
-                                    </button>
+                                    <form action="{{path('shop_bookshop_addProduct')}}" method="post">
+                                        <input type="hidden" name="qty" value="1">
+                                        <input type="hidden" name="productId" value="{{product.id}}">
+                                        <button type="submit" title="Add to Cart" class="button btn-cart" >
+                                            <span><span>Add to Cart</span></span>
+                                        </button>
+                                    </form>
                                 </div>
                                 {% else %} <div class="actions" style='color:red'><span>Not available</span></div>
                                 {% endif %}
@@ -96,9 +100,13 @@
 
                                 {% if product.active>0 %}
                                 <div class="actions">
-                                    <button type="button" title="Add to Cart" class="button btn-cart" >
-                                        <span><span>Add to Cart</span></span>
-                                    </button>
+                                    <form action="{{path('shop_bookshop_addProduct')}}" method="post">
+                                        <input type="hidden" name="qty" value="1">
+                                        <input type="hidden" name="productId" value="{{product.id}}">
+                                        <button type="submit" title="Add to Cart" class="button btn-cart" >
+                                            <span><span>Add to Cart</span></span>
+                                        </button>
+                                    </form>
                                 </div>
                                 {% else %} <div class="actions" style='color:red'><span>Not available</span></div>    
                                 {% endif %}
@@ -115,9 +123,13 @@
                                 </div>
                                 {% if product.active>0 %}
                                 <div class="actions">
-                                    <button type="button" title="Add to Cart" class="button btn-cart" >
-                                        <span><span>Add to Cart</span></span>
-                                    </button>
+                                    <form action="{{path('shop_bookshop_addProduct')}}" method="post">
+                                        <input type="hidden" name="qty" value="1">
+                                        <input type="hidden" name="productId" value="{{product.id}}">
+                                        <button type="submit" title="Add to Cart" class="button btn-cart" >
+                                            <span><span>Add to Cart</span></span>
+                                        </button>
+                                    </form>
                                 </div>
                                 {% else %} <div class="actions" style='color:red'><span>Not available</span></div>    
                                 {% endif %}    

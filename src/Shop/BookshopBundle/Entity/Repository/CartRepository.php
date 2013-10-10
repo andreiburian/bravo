@@ -19,9 +19,17 @@ class CartRepository extends EntityRepository
         $qb = $this->createQueryBuilder('c')
                         ->select('c')
                         ->where('c.user = :id')->setParameter('id', $id);
-        
-            return $qb->getQuery()->getResult();
-        
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getCartById($id)
+    {
+        $qb = $this->createQueryBuilder('c')
+                        ->select('c')
+                        ->where('c.id = :id')->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
     }
 
 }
