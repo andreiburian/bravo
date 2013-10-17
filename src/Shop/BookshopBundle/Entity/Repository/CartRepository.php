@@ -20,7 +20,7 @@ class CartRepository extends EntityRepository
                         ->select('c')
                         ->where('c.user = :id')->setParameter('id', $id);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function getCartById($id)
@@ -29,7 +29,7 @@ class CartRepository extends EntityRepository
                         ->select('c')
                         ->where('c.id = :id')->setParameter('id', $id);
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 }

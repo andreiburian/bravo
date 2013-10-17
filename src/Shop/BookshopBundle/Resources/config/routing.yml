@@ -17,24 +17,52 @@ shop_bookshop_product:
     pattern: /product/{id}
     defaults: { _controller: ShopBookshopBundle:Page:productPage }
 shop_bookshop_removeProduct:
-  pattern: removeProduct/{cartItemId}
-  defaults: { _controller: ShopBookshopBundle:Cart:removeProduct}
-  requirements:
+    pattern: removeProduct/{cartItemId}
+    defaults: { _controller: ShopBookshopBundle:Cart:removeProduct}
+    requirements:
         _method:  GET
         id: \d+
 shop_bookshop_emptyCart:
-  pattern: emptyCart/{cartId}
-  defaults: { _controller: ShopBookshopBundle:Cart:emptyCart}
-  requirements:
+    pattern: emptyCart/{cartId}
+    defaults: { _controller: ShopBookshopBundle:Cart:emptyCart}
+    requirements:
         _method:  GET
         id: \d+
 shop_bookshop_addProduct:
-  pattern: addProduct/
-  defaults: { _controller: ShopBookshopBundle:Cart:addProduct}
-  requirements:
+    pattern: addProduct/
+    defaults: { _controller: ShopBookshopBundle:Cart:addProduct}
+    requirements:
         _method:  POST 
 shop_bookshop_updateCart:
-  pattern: updateCart/
-  defaults: { _controller: ShopBookshopBundle:Cart:updateCart}
-  requirements:
+    pattern: updateCart/
+    defaults: { _controller: ShopBookshopBundle:Cart:updateCart}
+    requirements:
         _method:  POST   
+shop_bookshop_checkoutStep1:
+    pattern: /checkout/1
+    defaults: { _controller: ShopBookshopBundle:Checkout:step1}
+shop_bookshop_checkoutStep2:
+    pattern: /checkout/2
+    defaults: { _controller: ShopBookshopBundle:Checkout:step2}
+    requirements:
+        _method:  POST
+shop_bookshop_checkoutStep3:
+    pattern: /checkout/3
+    defaults: { _controller: ShopBookshopBundle:Checkout:step3}  
+    requirements:
+        _method:  POST 
+shop_bookshop_checkoutStep4:
+    pattern: /checkout/4
+    defaults: { _controller: ShopBookshopBundle:Checkout:step4} 
+    requirements:
+        _method:  POST
+shop_bookshop_checkoutStep5:
+    pattern: /checkout/5
+    defaults: { _controller: ShopBookshopBundle:Checkout:step5}      
+    requirements:
+        _method:  POST
+shop_bookshop_checkoutStep6:
+    pattern: /checkout/6
+    defaults: { _controller: ShopBookshopBundle:Checkout:step6}   
+    requirements:
+        _method:  POST

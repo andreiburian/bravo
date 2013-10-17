@@ -44,33 +44,28 @@ class User extends BaseUser
     protected $gender;
 
     /**
-     *
-     *  @ORM\Column(type="integer")
-     */
-    protected $billing_address_id;
-
-    /**
-     *
-     *  @ORM\Column(type="integer")
-     */
-    protected $shipping_address_id;
-
-    /**
      * @ORM\OneToMany(targetEntity="Cart", mappedBy="user")
      */
     protected $cart;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
+     */
+    protected $order;
+    
+   
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
+    
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -86,13 +81,14 @@ class User extends BaseUser
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
+    
         return $this;
     }
 
     /**
      * Get firstname
      *
-     * @return string
+     * @return string 
      */
     public function getFirstname()
     {
@@ -108,13 +104,14 @@ class User extends BaseUser
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
+    
         return $this;
     }
 
     /**
      * Get lastname
      *
-     * @return string
+     * @return string 
      */
     public function getLastname()
     {
@@ -130,13 +127,14 @@ class User extends BaseUser
     public function setPhone($phone)
     {
         $this->phone = $phone;
+    
         return $this;
     }
 
     /**
      * Get phone
      *
-     * @return integer
+     * @return integer 
      */
     public function getPhone()
     {
@@ -152,61 +150,18 @@ class User extends BaseUser
     public function setGender($gender)
     {
         $this->gender = $gender;
+    
         return $this;
     }
 
     /**
      * Get gender
      *
-     * @return integer
+     * @return integer 
      */
     public function getGender()
     {
         return $this->gender;
-    }
-
-    /**
-     * Set billing_address_id
-     *
-     * @param integer $billingAddressId
-     * @return User
-     */
-    public function setBillingAddressId($billingAddressId)
-    {
-        $this->billing_address_id = $billingAddressId;
-        return $this;
-    }
-
-    /**
-     * Get billing_address_id
-     *
-     * @return integer
-     */
-    public function getBillingAddressId()
-    {
-        return $this->billing_address_id;
-    }
-
-    /**
-     * Set shipping_address_id
-     *
-     * @param integer $shippingAddressId
-     * @return User
-     */
-    public function setShippingAddressId($shippingAddressId)
-    {
-        $this->shipping_address_id = $shippingAddressId;
-        return $this;
-    }
-
-    /**
-     * Get shipping_address_id
-     *
-     * @return integer
-     */
-    public function getShippingAddressId()
-    {
-        return $this->shipping_address_id;
     }
 
     /**
@@ -240,5 +195,38 @@ class User extends BaseUser
     public function getCart()
     {
         return $this->cart;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Shop\BookshopBundle\Entity\Order $order
+     * @return User
+     */
+    public function addOrder(\Shop\BookshopBundle\Entity\Order $order)
+    {
+        $this->order[] = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Shop\BookshopBundle\Entity\Order $order
+     */
+    public function removeOrder(\Shop\BookshopBundle\Entity\Order $order)
+    {
+        $this->order->removeElement($order);
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

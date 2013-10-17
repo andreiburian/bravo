@@ -20,12 +20,12 @@ class CartController extends Controller
 
         $em = $this->getDoctrine()
                 ->getManager();
-
+        
         $cart = $em->getRepository('ShopBookshopBundle:Cart')
                 ->getCartByUser($userId);
-
+        
         $user = $em->getRepository('ShopBookshopBundle:User')->find($userId);
-
+        
         if (sizeof($cart) == 0) {
             $newCart = new \Shop\BookshopBundle\Entity\Cart($user, date('Y-m-d'), 1, 0);
             $em->persist($newCart);
@@ -34,7 +34,7 @@ class CartController extends Controller
         }
 
         return $this->render('ShopBookshopBundle:Cart:cartSidebar.html.twig', array(
-                    'cart' => $cart[0]));
+                    'cart' => $cart));
     }
 
     public function cartPageAction()
@@ -48,7 +48,7 @@ class CartController extends Controller
                 ->getCartByUser($userId);
 
         return $this->render('ShopBookshopBundle:Cart:cartPage.html.twig', array(
-                    'cart' => $cart[0]));
+                    'cart' => $cart));
     }
 
     public function removeProductAction($cartItemId)
@@ -58,7 +58,7 @@ class CartController extends Controller
         $userId = (is_null($this->getUser()) ? 0 : $this->getUser()->getId() );
 
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
-        $cartItems = $cart[0]->getCartItems();
+        $cartItems = $cart->getCartItems();
 
         if (!(empty($cartItems))) {
             foreach ($cartItems as $cartItem) {
@@ -69,7 +69,7 @@ class CartController extends Controller
             }
         }
 
-        $this->updateTotal($cart[0]->getId());
+        $this->updateTotal($cart->getId());
 
         $path = $this->getRequest()->headers->get('referer');
         if (!$path)
@@ -84,8 +84,8 @@ class CartController extends Controller
         $em = $this->getDoctrine()->getManager();
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartById($cartId);
         $cartCheck = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
-        if ($cart[0]->getId() == $cartCheck[0]->getId()) {
-            $cartItems = $cart[0]->getCartItems();
+        if ($cart->getId() == $cartCheck->getId()) {
+            $cartItems = $cart->getCartItems();
 
             if (!(empty($cartItems))) {
                 foreach ($cartItems as $cartItem) {
@@ -93,7 +93,7 @@ class CartController extends Controller
                     $em->flush();
                 }
             }
-            $this->updateTotal($cart[0]->getId());
+            $this->updateTotal($cart->getId());
         }
         $path = $this->getRequest()->headers->get('referer');
         if (!$path)
@@ -115,7 +115,7 @@ class CartController extends Controller
         $em = $this->getDoctrine()->getManager();
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
         $product = $em->getRepository('ShopBookshopBundle:Product')->find($productId);
-        $cartItems = $cart[0]->getCartItems();
+        $cartItems = $cart->getCartItems();
 
         foreach ($cartItems as $cartItem) {
             if ($cartItem->getProduct()->getId() == $productId)
@@ -124,8 +124,8 @@ class CartController extends Controller
 
         if (empty($existingItem)) {
             if ($quantity <= $product->getStock()) {
-                $cartItem = new \Shop\BookshopBundle\Entity\CartItem($cart[0], $product, $product->getTitle(), $quantity, $product->getPrice());
-                $cart[0]->addCartItem($cartItem);
+                $cartItem = new \Shop\BookshopBundle\Entity\CartItem($cart, $product, $product->getTitle(), $quantity, $product->getPrice());
+                $cart->addCartItem($cartItem);
                 $em->persist($cartItem);
                 $em->flush();
             }
@@ -136,8 +136,8 @@ class CartController extends Controller
                 $em->flush();
             }
         }
-
-        $this->updateTotal($cart[0]->getId());
+        
+        $this->updateTotal($cart->getId());
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
@@ -147,7 +147,7 @@ class CartController extends Controller
         $userId = (is_null($this->getUser()) ? 0 : $this->getUser()->getId() );
 
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
-        $cartItems = $cart[0]->getCartItems();
+        $cartItems = $cart->getCartItems();
         foreach ($_POST['qty'] as $key => $value)
             foreach ($cartItems as $cartItem)
                 if ($cartItem->getId() == $key && ctype_digit($value) && $value >= 0 && $value <= $cartItem->getProduct()->getStock()) {
@@ -155,7 +155,7 @@ class CartController extends Controller
                     $em->persist($cartItem);
                 }
         $em->flush();
-        $this->updateTotal($cart[0]->getId());
+        $this->updateTotal($cart->getId());
         return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
@@ -163,12 +163,12 @@ class CartController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartById($cartId);
-        $cartItems = $cart[0]->getCartItems();
-        $cart[0]->setTotal(0.00);
+        $cartItems = $cart->getCartItems();
+        $cart->setTotal(0.00);
         foreach ($cartItems as $cartItem) {
-            $cart[0]->setTotal($cartItem->getQuantity() * $cartItem->getPrice() + $cart[0]->getTotal());
+            $cart->setTotal($cartItem->getQuantity() * $cartItem->getPrice() + $cart->getTotal());
         }
-        $em->persist($cart[0]);
+        $em->persist($cart);
         $em->flush();
     }
 

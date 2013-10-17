@@ -1,0 +1,26 @@
+{% extends 'ShopBookshopBundle::productpage_layout.html.twig' %}
+{% block title %}Order Review{% endblock%}
+{% block content %}
+<div class="page-title">
+    <h1>Order Review</h1>
+</div>
+<ol class="opc" id="checkoutSteps">
+    <li id="opc-review" class="section slide6 allow active">
+        <div class="step-title">
+            <span class="number">5</span>
+            <h2>Order Review</h2>
+            <a href="#">Edit</a>
+        </div>
+        <div id="checkout-step-review" class="step a-item">
+            <form action="{{path('shop_bookshop_checkoutStep6')}}" method="POST" id="co-payment-form">
+            <div class="order-review" id="checkout-review-load"></div>
+            <div class="buttons-set" id="review-buttons-container">
+                <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep4')}}';" ><small>« </small>Back</a></p>
+                <button type="submit" class="button"><span><span>Submit Order</span></span></button>
+            </div>
+            </form>
+        </div>
+    </li>
+</ol>
+{% block rightSidebar %}{% endblock %}
+{% endblock %}

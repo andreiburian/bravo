@@ -1,0 +1,39 @@
+{% extends 'ShopBookshopBundle::productpage_layout.html.twig' %}
+{% block title %}Payment Method{% endblock%}
+{% block content %} 
+<div class="page-title">
+    <h1>Payment Method</h1>
+</div>
+<ol class="opc" id="checkoutSteps">
+    <li id="opc-payment" class="section slide5 allow active">
+        <div class="step-title">
+            <span class="number">4</span>
+            <h2>Payment Information</h2>
+            <a href="#">Edit</a>
+        </div>
+
+        <div id="checkout-step-payment" class="step a-item">
+            <form action="{{path('shop_bookshop_checkoutStep5')}}" method="POST" id="co-payment-form">
+                <fieldset>
+                    <dl class="sp-methods" id="checkout-payment-method-load">
+                        <dt>
+                        <input autocomplete="off" id="p_method_checkmo" value="checkmo" name="payment[method]" title="Check / Money order" class="radio" type="radio">
+                        <label for="p_method_checkmo">Check / Money order 1</label>
+                        </dt>
+                        <dt>
+                        <input autocomplete="off" id="p_method_checkmo" value="checkmo" name="payment[method]" title="Check / Money order" class="radio" type="radio">
+                        <label for="p_method_checkmo">Check / Money order 2</label>
+                        </dt>
+                    </dl>
+                </fieldset>
+            <div class="buttons-set" id="payment-buttons-container">
+                <p class="required">* Required Fields</p>
+                <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep3')}}';" ><small>« </small>Back</a></p>
+                <button type="submit" class="button"><span><span>Continue</span></span></button>
+            </div>
+            </form>
+        </div>
+    </li>
+</ol>
+{% block rightSidebar %}{% endblock %}
+{% endblock %}

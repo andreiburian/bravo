@@ -17,11 +17,15 @@
                 {% else %}
                 <div class="page-title title-buttons">
                     <h1>Shopping Cart</h1>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <ul class="checkout-types">
                         <li>
+                            <a href="{{path('shop_bookshop_checkoutStep1')}}">
                             <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout btn-checkout" ><span><span>Proceed to Checkout</span></span></button>
+                            </a>
                         </li>
                     </ul>
+                    {% endif %}
                 </div>
                 <form action="{{ path('shop_bookshop_updateCart') }}" method="post">
                     <fieldset>
@@ -112,11 +116,15 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <ul class="checkout-types">
                             <li>
+                                <a href="{{path('shop_bookshop_checkoutStep1')}}">
                                 <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout btn-checkout" ><span><span>Proceed to Checkout</span></span></button>
+                                </a>
                             </li>
                         </ul>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}    

@@ -1,0 +1,31 @@
+{% extends 'ShopBookshopBundle::productpage_layout.html.twig' %}
+{% block title %}Order Successful{% endblock%}
+{% block content %}
+<ol class="opc" id="checkoutSteps">
+    <li id="opc-payment" class="section slide5 allow active">
+        <div class="step-title">
+            <span class="number">6</span>
+            <h2>Successful order</h2>
+            <a href="#">Edit</a>
+        </div>
+        <div id="checkout-step-payment" class="step a-item">
+            <form action="" method="post" id="co-payment-form">
+                <fieldset>
+                    <dl class="sp-methods" id="checkout-payment-method-load">
+                        Thank you for your purchase! <br>
+                        Your order number is: <?php echo $orderCode ?>. <br>
+                        You will receive an order information email with details of your order and a link to track it's progress. <br>
+                    </dl>
+                </fieldset>
+                <div class="buttons-set" id="payment-buttons-container">
+                    <a href="{{path('shop_bookshop_homepage')}}">
+                        <button name="submit" type="button" class="button">
+                            <span><span>Continue Shopping</span></span></button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </li>
+</ol>
+{% block rightSidebar %}{% endblock %}
+{% endblock %}

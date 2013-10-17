@@ -17,11 +17,13 @@
                     <span class="label">Cart Subtotal:</span> <span class="price">{{ cart.total }}</span>
                 </p>
             </div>
-                
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}    
             <div class="actions">
+                <a href="{{path('shop_bookshop_checkoutStep1')}}">
                 <button type="button" title="Checkout" class="button" ><span><span>Checkout</span></span></button>
+                </a>
             </div>
-             
+            {% endif %} 
             <p class="block-subtitle">Recently added item(s)</p>
 
             <ol id="cart-sidebar" class="mini-products-list">

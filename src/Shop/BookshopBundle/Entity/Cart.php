@@ -190,4 +190,27 @@ class Cart
     {
         return $this->user;
     }
+
+    /**
+     * Set order
+     *
+     * @param \Shop\BookshopBundle\Entity\Cart $order
+     * @return Cart
+     */
+    public function setOrder(\Shop\BookshopBundle\Entity\Cart $order = null)
+    {
+        $this->order = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Shop\BookshopBundle\Entity\Cart 
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
 }
