@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class AddressRepository extends EntityRepository
 {
+    public function getAddressById($id)
+    {
+        $qb = $this->createQueryBuilder('ad')
+                        ->select('ad.firstname', 'ad.lastname', 'ad.addressDetail', 'ad.country', 'ad.email')
+                        ->where('ad.id = :id')->setParameter('id', $id);
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

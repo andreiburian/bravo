@@ -53,7 +53,18 @@ class User extends BaseUser
      */
     protected $order;
     
-   
+    /**
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="userForBilling")
+     * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
+     */
+    protected $billingAddress;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="userForShipping")
+     * @ORM\JoinColumn(name="shipping_address_id", referencedColumnName="id")
+     */
+    protected $shippingAddress;
+    
     /**
      * Constructor
      */
@@ -61,7 +72,7 @@ class User extends BaseUser
     {
         parent::__construct();
     }
-    
+
     /**
      * Get id
      *
@@ -228,5 +239,51 @@ class User extends BaseUser
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set billingAddress
+     *
+     * @param \Shop\BookshopBundle\Entity\Address $billingAddress
+     * @return User
+     */
+    public function setBillingAddress(\Shop\BookshopBundle\Entity\Address $billingAddress = null)
+    {
+        $this->billingAddress = $billingAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get billingAddress
+     *
+     * @return \Shop\BookshopBundle\Entity\Address 
+     */
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
+    }
+
+    /**
+     * Set shippingAddress
+     *
+     * @param \Shop\BookshopBundle\Entity\Address $shippingAddress
+     * @return User
+     */
+    public function setShippingAddress(\Shop\BookshopBundle\Entity\Address $shippingAddress = null)
+    {
+        $this->shippingAddress = $shippingAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get shippingAddress
+     *
+     * @return \Shop\BookshopBundle\Entity\Address 
+     */
+    public function getShippingAddress()
+    {
+        return $this->shippingAddress;
     }
 }

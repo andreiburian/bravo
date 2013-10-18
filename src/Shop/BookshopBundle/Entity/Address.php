@@ -58,12 +58,19 @@ class Address
      * 
      */
     protected $orderShipping;
-        
-    /**
-     * Constructor
-     */
     
-
+    /**
+     * @ORM\OneToOne(targetEntity="User", mappedBy="billingAddress")
+     * 
+     */
+    protected $userForBilling;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="User", mappedBy="shippingAddress")
+     * 
+     */
+    protected $userForShipping;
+    
     /**
      * Get id
      *
@@ -233,5 +240,51 @@ class Address
     public function getOrderShipping()
     {
         return $this->orderShipping;
+    }
+
+    /**
+     * Set userForBilling
+     *
+     * @param \Shop\BookshopBundle\Entity\Address $userForBilling
+     * @return Address
+     */
+    public function setUserForBilling(\Shop\BookshopBundle\Entity\Address $userForBilling = null)
+    {
+        $this->userForBilling = $userForBilling;
+    
+        return $this;
+    }
+
+    /**
+     * Get userForBilling
+     *
+     * @return \Shop\BookshopBundle\Entity\Address 
+     */
+    public function getUserForBilling()
+    {
+        return $this->userForBilling;
+    }
+
+    /**
+     * Set userForShipping
+     *
+     * @param \Shop\BookshopBundle\Entity\Address $userForShipping
+     * @return Address
+     */
+    public function setUserForShipping(\Shop\BookshopBundle\Entity\Address $userForShipping = null)
+    {
+        $this->userForShipping = $userForShipping;
+    
+        return $this;
+    }
+
+    /**
+     * Get userForShipping
+     *
+     * @return \Shop\BookshopBundle\Entity\Address 
+     */
+    public function getUserForShipping()
+    {
+        return $this->userForShipping;
     }
 }

@@ -24,13 +24,13 @@
                                             <div class="field name-firstname">
                                                 <label for="billing:firstname" class="required"><em>*</em>First Name</label>
                                                 <div class="input-box">
-                                                    <input id="billing:firstname" name="billing[firstname]" title="First Name" maxlength="255" class="input-text required-entry" type="text">
+                                                    <input id="billing:firstname" value="{{address.firstname}}" name="billing[firstname]" title="First Name" maxlength="255" class="input-text required-entry" type="text">
                                                 </div>
                                             </div>
                                             <div class="field name-lastname">
                                                 <label for="billing:lastname" class="required"><em>*</em>Last Name</label>
                                                 <div class="input-box">
-                                                    <input id="billing:lastname" name="billing[lastname]" title="Last Name" maxlength="255" class="input-text required-entry" type="text">
+                                                    <input id="billing:lastname" value="{{address.lastname}}" name="billing[lastname]" title="Last Name" maxlength="255" class="input-text required-entry" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -39,28 +39,17 @@
                                         <div class="field">
                                             <label for="billing:email" class="required"><em>*</em>Email Address</label>
                                             <div class="input-box">
-                                                <input name="billing[email]" id="billing:email" title="Email Address" class="input-text validate-email required-entry" type="text">
+                                                <input name="billing[email]" value="{{address.email}}" id="billing:email" title="Email Address" class="input-text validate-email required-entry" type="text">
                                             </div>
                                         </div>
                                     </li>
                                     <li class="wide">
                                         <label for="billing:street1" class="required"><em>*</em>Address</label>
                                         <div class="input-box">
-                                            <input title="Street Address" name="billing[street][]" id="billing:street1" class="input-text  required-entry" type="text">
+                                            <input title="Street Address" value="{{address.addressDetail}}" name="billing[street][]" id="billing:street1" class="input-text  required-entry" type="text">
                                         </div>
                                     </li>
-                                    <li class="wide">
-                                        <div class="input-box">
-                                            <input title="Street Address 2" name="billing[street][]" id="billing:street2" class="input-text " type="text">
-                                        </div>
-                                    </li>
-                                    <li class="fields">
-                                        <div class="field">
-                                            <label for="billing:city" class="required"><em>*</em>City</label>
-                                            <div class="input-box">
-                                                <input title="City" name="billing[city]" class="input-text  required-entry" id="billing:city" type="text">
-                                            </div>
-                                        </div>
+                                   <li class="fields">
                                         <div class="field">
                                             <label for="billing:country_id" class="required"><em>*</em>Country</label>
                                             <div class="input-box">
@@ -82,7 +71,7 @@
                     </ul>
                     <div class="buttons-set" id="billing-buttons-container">
                         <p class="required">* Required Fields</p>
-                        <button type="submit" title="Continue" class="button"><span><span>Continue</span></span></button>
+                        <button type="submit" title="submit" name="step1" class="button"><span><span>Continue</span></span></button>
                     </div>
                 </fieldset>
             </form>
