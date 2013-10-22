@@ -15,7 +15,7 @@ class AddressRepository extends EntityRepository
     public function getAddressById($id)
     {
         $qb = $this->createQueryBuilder('ad')
-                        ->select('ad.firstname', 'ad.lastname', 'ad.addressDetail', 'ad.country', 'ad.email')
+                        ->select('ad')
                         ->where('ad.id = :id')->setParameter('id', $id);
         return $qb->getQuery()->getOneOrNullResult();
     }

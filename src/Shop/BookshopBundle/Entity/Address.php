@@ -46,31 +46,22 @@ class Address
      * @ORM\Column(type="string") 
      */
     protected $email;
-    
+ 
     /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="billing_address")
+     * @var boolean
      * 
      */
-    protected $orderBilling;
+    private $shipTo;
     
-    /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="shipping_address")
-     * 
-     */
-    protected $orderShipping;
+    public function getShipTo(){
+        return $this->shipTo;
+    }
     
-    /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="billingAddress")
-     * 
-     */
-    protected $userForBilling;
+    public function setShipTo($shipTo){
+        $this->shipTo = $shipTo;
+    }
     
-    /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="shippingAddress")
-     * 
-     */
-    protected $userForShipping;
-    
+
     /**
      * Get id
      *
@@ -194,97 +185,5 @@ class Address
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Set orderBilling
-     *
-     * @param \Shop\BookshopBundle\Entity\Order $orderBilling
-     * @return Address
-     */
-    public function setOrderBilling(\Shop\BookshopBundle\Entity\Order $orderBilling = null)
-    {
-        $this->orderBilling = $orderBilling;
-    
-        return $this;
-    }
-
-    /**
-     * Get orderBilling
-     *
-     * @return \Shop\BookshopBundle\Entity\Order 
-     */
-    public function getOrderBilling()
-    {
-        return $this->orderBilling;
-    }
-
-    /**
-     * Set orderShipping
-     *
-     * @param \Shop\BookshopBundle\Entity\Order $orderShipping
-     * @return Address
-     */
-    public function setOrderShipping(\Shop\BookshopBundle\Entity\Order $orderShipping = null)
-    {
-        $this->orderShipping = $orderShipping;
-    
-        return $this;
-    }
-
-    /**
-     * Get orderShipping
-     *
-     * @return \Shop\BookshopBundle\Entity\Order 
-     */
-    public function getOrderShipping()
-    {
-        return $this->orderShipping;
-    }
-
-    /**
-     * Set userForBilling
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $userForBilling
-     * @return Address
-     */
-    public function setUserForBilling(\Shop\BookshopBundle\Entity\Address $userForBilling = null)
-    {
-        $this->userForBilling = $userForBilling;
-    
-        return $this;
-    }
-
-    /**
-     * Get userForBilling
-     *
-     * @return \Shop\BookshopBundle\Entity\Address 
-     */
-    public function getUserForBilling()
-    {
-        return $this->userForBilling;
-    }
-
-    /**
-     * Set userForShipping
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $userForShipping
-     * @return Address
-     */
-    public function setUserForShipping(\Shop\BookshopBundle\Entity\Address $userForShipping = null)
-    {
-        $this->userForShipping = $userForShipping;
-    
-        return $this;
-    }
-
-    /**
-     * Get userForShipping
-     *
-     * @return \Shop\BookshopBundle\Entity\Address 
-     */
-    public function getUserForShipping()
-    {
-        return $this->userForShipping;
     }
 }

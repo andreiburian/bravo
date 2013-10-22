@@ -28,10 +28,6 @@ class ShippingMethod
      */
     protected $price;
     
-    /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="shippingMethod")
-     */
-    protected $order;
     
 
     /**
@@ -65,29 +61,6 @@ class ShippingMethod
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * Set order
-     *
-     * @param \Shop\BookshopBundle\Entity\Order $order
-     * @return ShippingMethod
-     */
-    public function setOrder(\Shop\BookshopBundle\Entity\Order $order = null)
-    {
-        $this->order = $order;
-    
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \Shop\BookshopBundle\Entity\Order 
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 
     /**

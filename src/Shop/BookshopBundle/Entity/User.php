@@ -49,18 +49,18 @@ class User extends BaseUser
     protected $cart;
     
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="OrderModel", mappedBy="user")
      */
     protected $order;
     
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="userForBilling")
+     * @ORM\OneToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
      */
     protected $billingAddress;
     
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="userForShipping")
+     * @ORM\OneToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="shipping_address_id", referencedColumnName="id")
      */
     protected $shippingAddress;
@@ -72,6 +72,8 @@ class User extends BaseUser
     {
         parent::__construct();
     }
+
+    
 
     /**
      * Get id
@@ -211,10 +213,10 @@ class User extends BaseUser
     /**
      * Add order
      *
-     * @param \Shop\BookshopBundle\Entity\Order $order
+     * @param \Shop\BookshopBundle\Entity\OrderModel $order
      * @return User
      */
-    public function addOrder(\Shop\BookshopBundle\Entity\Order $order)
+    public function addOrder(\Shop\BookshopBundle\Entity\OrderModel $order)
     {
         $this->order[] = $order;
     
@@ -224,9 +226,9 @@ class User extends BaseUser
     /**
      * Remove order
      *
-     * @param \Shop\BookshopBundle\Entity\Order $order
+     * @param \Shop\BookshopBundle\Entity\OrderModel $order
      */
-    public function removeOrder(\Shop\BookshopBundle\Entity\Order $order)
+    public function removeOrder(\Shop\BookshopBundle\Entity\OrderModel $order)
     {
         $this->order->removeElement($order);
     }

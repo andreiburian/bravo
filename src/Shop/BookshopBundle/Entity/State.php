@@ -22,11 +22,8 @@ class State
      * @ORM\Column(type="string")
      */
     protected $label;
+   
     
-    /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="state")
-     */
-    protected $order;
 
     /**
      * Get id
@@ -59,28 +56,5 @@ class State
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * Set order
-     *
-     * @param \Shop\BookshopBundle\Entity\Order $order
-     * @return State
-     */
-    public function setOrder(\Shop\BookshopBundle\Entity\Order $order = null)
-    {
-        $this->order = $order;
-    
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \Shop\BookshopBundle\Entity\Order 
-     */
-    public function getOrder()
-    {
-        return $this->order;
     }
 }

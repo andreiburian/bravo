@@ -44,25 +44,15 @@ shop_bookshop_checkoutStep1:
 shop_bookshop_checkoutStep2:
     pattern: /checkout/2
     defaults: { _controller: ShopBookshopBundle:Checkout:step2}
-    requirements:
-        _method:  POST
 shop_bookshop_checkoutStep3:
     pattern: /checkout/3
     defaults: { _controller: ShopBookshopBundle:Checkout:step3}  
-    requirements:
-        _method:  POST 
 shop_bookshop_checkoutStep4:
     pattern: /checkout/4
     defaults: { _controller: ShopBookshopBundle:Checkout:step4} 
-    requirements:
-        _method:  POST
 shop_bookshop_checkoutStep5:
     pattern: /checkout/5
     defaults: { _controller: ShopBookshopBundle:Checkout:step5}      
-    requirements:
-        _method:  POST
 shop_bookshop_checkoutStep6:
     pattern: /checkout/6
     defaults: { _controller: ShopBookshopBundle:Checkout:step6}   
-    requirements:
-        _method:  POST

@@ -14,7 +14,7 @@ class RegistrationFormType extends BaseType
         $builder->add('firstname');
         $builder->add('lastname');
         $builder->add('phone');
-       $builder->add('gender', 'choice', array(
+        $builder->add('gender', 'choice', array(
             'choices' => array("Male", "Female"),
             'expanded' => true,
             'multiple' => false,

@@ -5,10 +5,10 @@ namespace Shop\BookshopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Shop\BookshopBundle\Entity\Repository\OrderRepository")
- * @ORM\Table(name="order")
+ * @ORM\Entity(repositoryClass="Shop\BookshopBundle\Entity\Repository\OrderModelRepository")
+ * @ORM\Table(name="orders")
  */
-class Order
+class OrderModel
 {
     
     /**
@@ -25,14 +25,14 @@ class Order
     protected $user;
     
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderBilling")
+     * @ORM\ManyToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
      */
     protected $billing_address;
     
     /**
-     * @ORM\OneToOne(targetEntity="Address", inversedBy="orderShipping")
-     * @ORM\JoinColumn(name="shipping_address_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\JoinColumn(name="shipping_address_id", referencedColumnName="id", nullable=true)
      */
     protected $shipping_address;
     
@@ -55,33 +55,25 @@ class Order
     protected $date;
     
     /**
-     * @ORM\OneToOne(targetEntity="State", inversedBy="order")
+     * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      */
     protected $state;
       
     /**
-     * @ORM\OneToOne(targetEntity="ShippingMethod", inversedBy="order")
-     * @ORM\JoinColumn(name="shipping_method_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="ShippingMethod")
+     * @ORM\JoinColumn(name="shipping_method_id", referencedColumnName="id", nullable=true)
      */
     protected $shippingMethod;
     
     /**
-     * @ORM\OneToOne(targetEntity="PaymentMethod", inversedBy="order")
-     * @ORM\JoinColumn(name="payment_method_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="PaymentMethod")
+     * @ORM\JoinColumn(name="payment_method_id", referencedColumnName="id", nullable=true)
      */
     protected $paymentMethod;
     
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->billing_address = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->shipping_address = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
+
     /**
      * Get id
      *
@@ -96,7 +88,7 @@ class Order
      * Set total
      *
      * @param integer $total
-     * @return Order
+     * @return OrderModel
      */
     public function setTotal($total)
     {
@@ -119,7 +111,7 @@ class Order
      * Set date
      *
      * @param \DateTime $date
-     * @return Order
+     * @return OrderModel
      */
     public function setDate($date)
     {
@@ -139,32 +131,22 @@ class Order
     }
 
     /**
-     * Add user
+     * Set user
      *
      * @param \Shop\BookshopBundle\Entity\User $user
-     * @return Order
+     * @return OrderModel
      */
-    public function addUser(\Shop\BookshopBundle\Entity\User $user)
+    public function setUser(\Shop\BookshopBundle\Entity\User $user = null)
     {
-        $this->user[] = $user;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Remove user
-     *
-     * @param \Shop\BookshopBundle\Entity\User $user
-     */
-    public function removeUser(\Shop\BookshopBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
-    }
-
-    /**
      * Get user
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Shop\BookshopBundle\Entity\User 
      */
     public function getUser()
     {
@@ -172,32 +154,22 @@ class Order
     }
 
     /**
-     * Add billing_address
+     * Set billing_address
      *
      * @param \Shop\BookshopBundle\Entity\Address $billingAddress
-     * @return Order
+     * @return OrderModel
      */
-    public function addBillingAddres(\Shop\BookshopBundle\Entity\Address $billingAddress)
+    public function setBillingAddress(\Shop\BookshopBundle\Entity\Address $billingAddress = null)
     {
-        $this->billing_address[] = $billingAddress;
+        $this->billing_address = $billingAddress;
     
         return $this;
     }
 
     /**
-     * Remove billing_address
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $billingAddress
-     */
-    public function removeBillingAddres(\Shop\BookshopBundle\Entity\Address $billingAddress)
-    {
-        $this->billing_address->removeElement($billingAddress);
-    }
-
-    /**
      * Get billing_address
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Shop\BookshopBundle\Entity\Address 
      */
     public function getBillingAddress()
     {
@@ -205,32 +177,22 @@ class Order
     }
 
     /**
-     * Add shipping_address
+     * Set shipping_address
      *
      * @param \Shop\BookshopBundle\Entity\Address $shippingAddress
-     * @return Order
+     * @return OrderModel
      */
-    public function addShippingAddres(\Shop\BookshopBundle\Entity\Address $shippingAddress)
+    public function setShippingAddress(\Shop\BookshopBundle\Entity\Address $shippingAddress = null)
     {
-        $this->shipping_address[] = $shippingAddress;
+        $this->shipping_address = $shippingAddress;
     
         return $this;
     }
 
     /**
-     * Remove shipping_address
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $shippingAddress
-     */
-    public function removeShippingAddres(\Shop\BookshopBundle\Entity\Address $shippingAddress)
-    {
-        $this->shipping_address->removeElement($shippingAddress);
-    }
-
-    /**
      * Get shipping_address
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Shop\BookshopBundle\Entity\Address 
      */
     public function getShippingAddress()
     {
@@ -241,7 +203,7 @@ class Order
      * Set cart
      *
      * @param \Shop\BookshopBundle\Entity\Cart $cart
-     * @return Order
+     * @return OrderModel
      */
     public function setCart(\Shop\BookshopBundle\Entity\Cart $cart = null)
     {
@@ -264,7 +226,7 @@ class Order
      * Set state
      *
      * @param \Shop\BookshopBundle\Entity\State $state
-     * @return Order
+     * @return OrderModel
      */
     public function setState(\Shop\BookshopBundle\Entity\State $state = null)
     {
@@ -284,49 +246,10 @@ class Order
     }
 
     /**
-     * Set billing_address
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $billingAddress
-     * @return Order
-     */
-    public function setBillingAddress(\Shop\BookshopBundle\Entity\Address $billingAddress = null)
-    {
-        $this->billing_address = $billingAddress;
-    
-        return $this;
-    }
-
-    /**
-     * Set shipping_address
-     *
-     * @param \Shop\BookshopBundle\Entity\Address $shippingAddress
-     * @return Order
-     */
-    public function setShippingAddress(\Shop\BookshopBundle\Entity\Address $shippingAddress = null)
-    {
-        $this->shipping_address = $shippingAddress;
-    
-        return $this;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \Shop\BookshopBundle\Entity\User $user
-     * @return Order
-     */
-    public function setUser(\Shop\BookshopBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-    
-        return $this;
-    }
-
-    /**
      * Set shippingMethod
      *
      * @param \Shop\BookshopBundle\Entity\ShippingMethod $shippingMethod
-     * @return Order
+     * @return OrderModel
      */
     public function setShippingMethod(\Shop\BookshopBundle\Entity\ShippingMethod $shippingMethod = null)
     {
@@ -349,7 +272,7 @@ class Order
      * Set paymentMethod
      *
      * @param \Shop\BookshopBundle\Entity\PaymentMethod $paymentMethod
-     * @return Order
+     * @return OrderModel
      */
     public function setPaymentMethod(\Shop\BookshopBundle\Entity\PaymentMethod $paymentMethod = null)
     {

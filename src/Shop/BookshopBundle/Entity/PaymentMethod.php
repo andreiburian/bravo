@@ -22,11 +22,7 @@ class PaymentMethod
      * @ORM\Column(type="string")
      */
     protected $label;
-    
-    /**
-     * @ORM\OneToOne(targetEntity="Order", mappedBy="paymentMethod")
-     */
-    protected $order;
+ 
 
     /**
      * Get id
@@ -60,28 +56,4 @@ class PaymentMethod
     {
         return $this->label;
     }
-
-    /**
-     * Set order
-     *
-     * @param \Shop\BookshopBundle\Entity\Order $order
-     * @return PaymentMethod
-     */
-    public function setOrder(\Shop\BookshopBundle\Entity\Order $order = null)
-    {
-        $this->order = $order;
-    
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \Shop\BookshopBundle\Entity\Order 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
 }
