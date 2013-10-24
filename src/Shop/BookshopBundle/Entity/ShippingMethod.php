@@ -5,7 +5,7 @@ namespace Shop\BookshopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Shop\BookshopBundle\Entity\Repository\ShippingMethodRepository")
  * @ORM\Table(name="shipping_method")
  */
 class ShippingMethod
@@ -28,8 +28,6 @@ class ShippingMethod
      */
     protected $price;
     
-    
-
     /**
      * Get id
      *
@@ -85,4 +83,9 @@ class ShippingMethod
     {
         return $this->price;
     }
+    public function __toString()
+    {
+        return sprintf('%s - $%d', $this->label, $this->price);
+    }
+
 }

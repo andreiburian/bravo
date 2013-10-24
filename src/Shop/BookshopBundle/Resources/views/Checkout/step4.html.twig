@@ -11,19 +11,17 @@
             <h2>Payment Information</h2>
             <a href="#">Edit</a>
         </div>
-
         <div id="checkout-step-payment" class="step a-item">
-            <form action="{{path('shop_bookshop_checkoutStep5')}}" method="POST" id="co-payment-form">
+            <form action="{{path('shop_bookshop_checkoutStep4')}}" method="POST" id="co-payment-form">
                 <fieldset>
                     <dl class="sp-methods" id="checkout-payment-method-load">
+                        {% for child in form.paymentMethod %}
                         <dt>
-                        <input autocomplete="off" id="p_method_checkmo" value="checkmo" name="payment[method]" title="Check / Money order" class="radio" type="radio">
-                        <label for="p_method_checkmo">Check / Money order 1</label>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
                         </dt>
-                        <dt>
-                        <input autocomplete="off" id="p_method_checkmo" value="checkmo" name="payment[method]" title="Check / Money order" class="radio" type="radio">
-                        <label for="p_method_checkmo">Check / Money order 2</label>
-                        </dt>
+                        {% endfor %}
+                        {{form_rest(form)}}
                     </dl>
                 </fieldset>
             <div class="buttons-set" id="payment-buttons-container">

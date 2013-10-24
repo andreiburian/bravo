@@ -61,7 +61,8 @@
                             </fieldset>
                         </li>
                     <li class="control">
-                        <input name="shipping[same_as_billing]" id="shipping:same_as_billing" value="1" title="Use Billing Address" class="checkbox" type="checkbox"><label for="shipping:same_as_billing">Use Billing Address</label>
+                        {{ form_widget(form.shipTo, { 'attr': {'class': 'checkbox'} }) }}
+                        {{ form_label(form.shipTo) }}    
                     </li>
                     {{ form_rest(form) }}
                 </ul>

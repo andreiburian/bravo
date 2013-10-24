@@ -5,7 +5,7 @@ namespace Shop\BookshopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Shop\BookshopBundle\Entity\Repository\PaymentMethodRepository")
  * @ORM\Table(name="payment_method")
  */
 class PaymentMethod
@@ -23,6 +23,12 @@ class PaymentMethod
      */
     protected $label;
  
+    public function __toString()
+    {
+        return sprintf('%s', $this->label);
+    }
+
+   
 
     /**
      * Get id

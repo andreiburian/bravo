@@ -12,13 +12,99 @@
             <a href="#">Edit</a>
         </div>
         <div id="checkout-step-review" class="step a-item">
-            <form action="{{path('shop_bookshop_checkoutStep6')}}" method="POST" id="co-payment-form">
-            <div class="order-review" id="checkout-review-load"></div>
-            <div class="buttons-set" id="review-buttons-container">
-                <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep4')}}';" ><small>« </small>Back</a></p>
-                <button type="submit" class="button"><span><span>Submit Order</span></span></button>
-            </div>
-            </form>
+           <div id="checkout-step-review" class="step a-item">
+                    <div class="order-review" id="checkout-review-load">
+                        <table class="data-table">
+                            <thead>
+                            <th>Product Image</th><th>Product Name</th><th>Unit Price</th><th>Quantity</th><th>Subtotal</th>
+                            </thead>
+                            <tbody>
+                            {% for ci in order.cart.cartItems %}
+                                <tr class="<?php echo ($i % 2 == 0) ? 'odd' : 'even' ?>">
+                                    <td><img src="{{ asset('bundles/shopbookshop/image/'~ci.product.image) }}" alt="{{ci.product.title}}" height="75" width="75" /></td>
+                                    <td>{{ci.title}}</td>
+                                    <td>{{ci.price}}</td>
+                                    <td>{{ci.quantity}}</td>
+                                    <td>{{ci.price * ci.quantity}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <br/>
+                        <table>
+                            <tr>
+                                <td>Subtotal :</td>
+                                <td>$ {{order.total-order.shippingMethod.price}}</td>
+                            </tr>
+                            <tr><td>{{order.shippingMethod.label}} : </td>
+                                <td>$ {{order.shippingMethod.price}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total: </td>
+                                <td>$ {{order.total}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                            {% set b_address = order.billingAddress %}
+                                            {% set s_address = order.shippingAddress %}
+                                        <br/>
+                                        <h3> Billing address: </h3>
+                                        <br/>
+                                            {{b_address.country}}
+                                        <br/>
+                                            {{b_address.email}}
+                                        <br/>
+                                            {{b_address.firstName}} 
+                                            {{b_address.lastName}}
+                                        <br/>
+                                            {{b_address.addressDetail}}
+                                        <br/><br/>
+                                            {% if b_address.id != s_address.id %}
+                                        <h3> Shipping Address: </h3>
+                                        <br/>
+                                                {{s_address.country}}
+                                        <br/>
+                                                {{s_address.email}}
+                                        <br/>
+                                                {{s_address.firstName}} 
+                                                {{s_address.lastName}}
+                                        <br/>
+                                                {{s_address.addressDetail}}
+                                            {% else %}
+                                        <h3>Shipping address:</h3>  The same as the billing address above.
+                                            {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <br/>
+                                        <h3> Shipping method: </h3>
+                                            {{order.shippingMethod.label}}
+                                        Price ${{order.shippingMethod.price}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <br/>
+                                        <h3> Payment: </h3>
+                                            {{order.paymentMethod.label}}                                        
+                                    </td>
+                                </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="buttons-set" id="payment-buttons-container">
+                        <p class="required">* Required Fields</p>
+                        <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep4')}}';" ><small>« </small>Back</a></p>
+                        <a href="{{path('shop_bookshop_checkoutStep6')}}" >
+                            <button type="button" class="button"><span><span>Continue</span></span></button>
+                        </a>
+                        <a href="{{path('shop_bookshop_checkoutCancel')}}" >
+                            <button type="button" class="button" style="margin-right:50px "><span><span>Cancel order</span></span></button>
+                        </a>
+                    </div>
+                </div>
         </div>
     </li>
 </ol>

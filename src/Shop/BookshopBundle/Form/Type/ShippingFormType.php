@@ -5,7 +5,7 @@ namespace Shop\BookshopBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class BillingFormType extends AbstractType
+class ShippingFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -14,19 +14,17 @@ class BillingFormType extends AbstractType
                 ->add('firstname', 'text')
                 ->add('lastname', 'text')
                 ->add('email', 'email')
-                ->add('shipTo',
-                        'choice', 
+                ->add('shipTo', 'checkbox', 
                         array(
-                        'choices' => array(true => 'Ship to this address', false => 'Ship to different address'),
-                        'required' => true,
-                        'expanded' => true,
-                        'data' => true
+                        'label' => 'Use billing address',
+                        'value' => null,
+                        'required' => false
                         ))
                         ;
     }
 
     public function getName()
     {
-        return 'billing_form_type';
+        return 'shipping_form_type';
     }
 }

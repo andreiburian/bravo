@@ -61,7 +61,7 @@ class Address
         $this->shipTo = $shipTo;
     }
     
-
+    
     /**
      * Get id
      *

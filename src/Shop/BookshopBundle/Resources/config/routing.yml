@@ -55,4 +55,7 @@ shop_bookshop_checkoutStep5:
     defaults: { _controller: ShopBookshopBundle:Checkout:step5}      
 shop_bookshop_checkoutStep6:
     pattern: /checkout/6
-    defaults: { _controller: ShopBookshopBundle:Checkout:step6}   
+    defaults: { _controller: ShopBookshopBundle:Checkout:step6} 
+shop_bookshop_checkoutCancel:
+    pattern: /checkout/cancel
+    defaults: { _controller: ShopBookshopBundle:Checkout:cancel}       
