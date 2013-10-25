@@ -16,8 +16,13 @@ class OrderModelRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('o')
                         ->select('o')
-                        ->where('o.user = :id')->setParameter('id', $id);
+                        ->where('o.user = :id')->setParameter('id', $id)
+                        ->orderBy('o.id','DESC');
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $result = $qb->getQuery()->getResult();
+        if(count($result) >0)
+            return $result[0];
+        else
+            return null;
     }
 }

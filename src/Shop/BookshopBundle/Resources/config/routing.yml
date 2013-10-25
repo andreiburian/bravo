@@ -21,13 +21,13 @@ shop_bookshop_removeProduct:
     defaults: { _controller: ShopBookshopBundle:Cart:removeProduct}
     requirements:
         _method:  GET
-        id: \d+
+        cartItemId: \d+
 shop_bookshop_emptyCart:
     pattern: emptyCart/{cartId}
     defaults: { _controller: ShopBookshopBundle:Cart:emptyCart}
     requirements:
         _method:  GET
-        id: \d+
+        cartId: \d+
 shop_bookshop_addProduct:
     pattern: addProduct/
     defaults: { _controller: ShopBookshopBundle:Cart:addProduct}
@@ -56,6 +56,12 @@ shop_bookshop_checkoutStep5:
 shop_bookshop_checkoutStep6:
     pattern: /checkout/6
     defaults: { _controller: ShopBookshopBundle:Checkout:step6} 
-shop_bookshop_checkoutCancel:
-    pattern: /checkout/cancel
-    defaults: { _controller: ShopBookshopBundle:Checkout:cancel}       
+shop_bookshop_checkoutCancelOrder:
+    pattern: /checkout/cancel/{orderId}
+    defaults: { _controller: ShopBookshopBundle:Checkout:cancelOrder}      
+    requirements:
+        _method:  GET
+        orderId: \d+
+shop_bookshop_checkoutPlaceOrder:
+    pattern: /checkout/placeOrder
+    defaults: { _controller: ShopBookshopBundle:Checkout:placeOrder}              

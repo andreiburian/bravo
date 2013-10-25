@@ -22,7 +22,7 @@ class Cart
      * @ORM\OneToMany(targetEntity="CartItem", mappedBy="cart")
      */
     protected $cartItems;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="cart")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -43,7 +43,7 @@ class Cart
      * @ORM\Column(type="integer") 
      */
     protected $total;
-    
+
     /**
      * Constructor
      */
@@ -55,8 +55,6 @@ class Cart
         $this->setTotal($total);
         $this->cartItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    
 
     /**
      * Get id
@@ -77,7 +75,7 @@ class Cart
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
@@ -100,7 +98,7 @@ class Cart
     public function setActive($active)
     {
         $this->active = $active;
-    
+
         return $this;
     }
 
@@ -123,7 +121,7 @@ class Cart
     public function setTotal($total)
     {
         $this->total = $total;
-    
+
         return $this;
     }
 
@@ -146,7 +144,7 @@ class Cart
     public function addCartItem(\Shop\BookshopBundle\Entity\CartItem $cartItems)
     {
         $this->cartItems[] = $cartItems;
-    
+
         return $this;
     }
 
@@ -179,7 +177,7 @@ class Cart
     public function setUser(\Shop\BookshopBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
@@ -192,4 +190,5 @@ class Cart
     {
         return $this->user;
     }
+
 }

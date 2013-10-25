@@ -17,10 +17,14 @@ class CartRepository extends EntityRepository
     public function getCartByUser($id)
     {
         $qb = $this->createQueryBuilder('c')
-                        ->select('c')
-                        ->where('c.user = :id')->setParameter('id', $id);
-
-        return $qb->getQuery()->getOneOrNullResult();
+                ->select('c')
+                ->where('c.user = :id')->setParameter('id', $id)
+                ->orderBy('c.id', 'DESC');
+        $result = $qb->getQuery()->getResult();
+        if (count($result) > 0)
+            return $result[0];
+        else
+            return null;
     }
 
     public function getCartById($id)
@@ -28,8 +32,11 @@ class CartRepository extends EntityRepository
         $qb = $this->createQueryBuilder('c')
                         ->select('c')
                         ->where('c.id = :id')->setParameter('id', $id);
-
-        return $qb->getQuery()->getOneOrNullResult();
+        $result = $qb->getQuery()->getResult();
+        if (count($result) > 0)
+            return $result[0];
+        else
+            return null;
     }
 
 }

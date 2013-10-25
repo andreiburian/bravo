@@ -12,9 +12,6 @@ use Shop\BookshopBundle\Form\Type\BillingFormType;
 use Shop\BookshopBundle\Form\Type\ShippingFormType;
 use Shop\BookshopBundle\Form\Type\ShippingMethodFormType;
 use Shop\BookshopBundle\Form\Type\PaymentMethodFormType;
-use Shop\BookshopBundle\Entity\State;
-use Shop\BookshopBundle\Entity\ShippingMethod;
-use Shop\BookshopBundle\Entity\PaymentMethod;
 
 class CheckoutController extends Controller
 {
@@ -22,20 +19,26 @@ class CheckoutController extends Controller
     public function step1Action()
     {
         $userId = (is_null($this->getUser()) ? 0 : $this->getUser()->getId() );
-        if ($userId == 0)
-            return $this->redirect('../login');
         $user = $this->getUser();
+        if ($userId == 0){
+            return $this->redirect($this->generateUrl('shop_bookshop_homepage'));
+        }
+        
         $em = $this->getDoctrine()->getManager();
+        $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
+        
+        if($cart->getTotal() == 0)
+            return $this->redirect($this->generateUrl('shop_bookshop_homepage'));
+        
         if ($this->getUser()->getBillingAddress() != null) {
             $billingAddress = $em->getRepository('ShopBookshopBundle:Address')
                     ->getAddressById($this->getUser()->getBillingAddress()->getId());
         } else {
             $billingAddress = new Address();
         }
-
-        $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
+        
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
-        if ($orderModel == null)
+        if ($orderModel == null || $orderModel->getState()->getId()==2)
             $orderModel = new OrderModel();
         $state = $em->getRepository('ShopBookshopBundle:State')->find(1);
 
@@ -45,9 +48,7 @@ class CheckoutController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
         }
-
         if ($form->isValid()) {
-
             $em->persist($billingAddress);
             $em->flush($billingAddress);
             $orderModel->setBillingAddress($billingAddress);
@@ -69,7 +70,6 @@ class CheckoutController extends Controller
             else
                 return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep3'));
         }
-
         return $this->render('ShopBookshopBundle:Checkout:step1.html.twig', array('form' => $form->createView()));
     }
 
@@ -78,23 +78,17 @@ class CheckoutController extends Controller
         $user = $this->getUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
-
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
-
         $shippingAddress = new Address();
-
-        if ($orderModel->getShippingAddress() != null) {
-            $oldShippingAddress = $orderModel->getShippingAddress();
+        if ($user->getShippingAddress() != null) {
+            $oldShippingAddress = $user->getShippingAddress();
             $this->copyAddress($oldShippingAddress, $shippingAddress);
         }
-
         $request = $this->getRequest();
-
         $form = $this->createForm(new ShippingFormType(), $shippingAddress);
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
         }
-
         if ($form->isValid()) {
             $em->persist($shippingAddress);
             $em->flush($shippingAddress);
@@ -106,6 +100,7 @@ class CheckoutController extends Controller
                 $user->setShippingAddress($shippingAddress);
             }
             $em->persist($orderModel);
+            $em->persist($user);
             $em->flush($orderModel);
             $em->flush($user);
             return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep3'));
@@ -121,15 +116,11 @@ class CheckoutController extends Controller
         $shippingMethod = $em->getRepository('ShopBookshopBundle:ShippingMethod')->findAll();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
         $check = (($orderModel->getShippingMethod() == null) ? null : ($orderModel->getShippingMethod()->getId()));
-
         $request = $this->getRequest();
-
         $form = $this->createForm(new ShippingMethodFormType($em), array($shippingMethod, $check));
-
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
         }
-
         if ($form->isValid()) {
             $data = $form->getData();
             $shippingMethod = $data['shippingMethod'];
@@ -139,7 +130,6 @@ class CheckoutController extends Controller
             $em->flush($orderModel);
             return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep4'));
         }
-
         return $this->render('ShopBookshopBundle:Checkout:step3.html.twig', array('form' => $form->createView()));
     }
 
@@ -176,8 +166,6 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
      
-
-        
         return $this->render('ShopBookshopBundle:Checkout:step5.html.twig', array('order' => $orderModel));
     }
 
@@ -186,17 +174,47 @@ class CheckoutController extends Controller
         return $this->render('ShopBookshopBundle:Checkout:step6.html.twig');
     }
     
-    public function cancelAction()
+    public function cancelOrderAction($orderId)
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->find($orderId);
+        if($orderModel !=null) 
+            if($orderModel->getUser()!=null)
+                if($orderModel->getUser()->getId() == $user->getId())
+                {
+                $em->remove($orderModel);
+                $em->flush($orderModel);
+                }
+        return $this->redirect($this->generateUrl('shop_bookshop_homepage'));
+    }
+    
+    public function placeOrderAction()
     {
         $user = $this->getUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
-        $state = $em->getRepository('ShopBookshopBundle:State')->find(5);
-        $orderModel->setState($state);
-        $em->persist($orderModel);
-        $em->flush($orderModel);
-        return $this->redirect($this->generateUrl('shop_bookshop_homepage'));
+        $state = $em->getRepository('ShopBookshopBundle:State')->find(2);
+        $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
+        if($orderModel !=null) 
+            if($orderModel->getUser()!=null)
+                if($orderModel->getUser()->getId() == $user->getId())
+                {
+                $orderModel->setCart(null);    
+                $orderModel->setState($state);
+                $user->removeCart($cart);
+                $em->persist($orderModel);
+                $em->flush($orderModel);
+                $em->remove($cart);
+                $em->flush($cart);
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Your order has been placed')
+                    ->setFrom('book@shop.com')
+                    ->setTo($user->getEmail());
+                $this->get('mailer')->send($message);
+                }
+        return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep6'));
     }
 
     private function copyAddress($from, $to)
@@ -207,5 +225,4 @@ class CheckoutController extends Controller
         $to->setLastname($from->getLastname());
         $to->setEmail($from->getEmail());
     }
-
 }

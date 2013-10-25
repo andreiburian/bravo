@@ -97,10 +97,10 @@
                     <div class="buttons-set" id="payment-buttons-container">
                         <p class="required">* Required Fields</p>
                         <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep4')}}';" ><small>« </small>Back</a></p>
-                        <a href="{{path('shop_bookshop_checkoutStep6')}}" >
+                        <a href="{{path('shop_bookshop_checkoutPlaceOrder')}}" >
                             <button type="button" class="button"><span><span>Continue</span></span></button>
                         </a>
-                        <a href="{{path('shop_bookshop_checkoutCancel')}}" >
+                        <a href="{{path('shop_bookshop_checkoutCancelOrder', {'orderId': order.id})}}" >
                             <button type="button" class="button" style="margin-right:50px "><span><span>Cancel order</span></span></button>
                         </a>
                     </div>
