@@ -1,0 +1,86 @@
+{% extends 'ShopBookshopBundle::dashboard_layout.html.twig' %}
+{% block title %}Order Review{% endblock%}
+{% block content %}
+<div class="page-title">
+    <h1>Order Review</h1>
+</div>
+<ol class="opc" id="checkoutSteps">
+    <li id="opc-review" class="section slide6 allow active">
+        <div class="step-title">
+            <h2>Order Review</h2>
+        </div>
+        <div id="checkout-step-review" class="step a-item">
+           <div id="checkout-step-review" class="step a-item">
+                    <div class="order-review" id="checkout-review-load">
+                        <br/>
+                        <table>
+                            <tr>
+                                <td>Subtotal :</td>
+                                <td>$ {{order.total-order.shippingMethod.price}}</td>
+                            </tr>
+                            <tr><td>{{order.shippingMethod.label}} : </td>
+                                <td>$ {{order.shippingMethod.price}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total: </td>
+                                <td>$ {{order.total}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                            {% set b_address = order.billingAddress %}
+                                            {% set s_address = order.shippingAddress %}
+                                        <br/>
+                                        <h3> Billing address: </h3>
+                                        <br/>
+                                            {{b_address.country}}
+                                        <br/>
+                                            {{b_address.email}}
+                                        <br/>
+                                            {{b_address.firstName}} 
+                                            {{b_address.lastName}}
+                                        <br/>
+                                            {{b_address.addressDetail}}
+                                        <br/><br/>
+                                            {% if b_address.id != s_address.id %}
+                                        <h3> Shipping Address: </h3>
+                                        <br/>
+                                                {{s_address.country}}
+                                        <br/>
+                                                {{s_address.email}}
+                                        <br/>
+                                                {{s_address.firstName}} 
+                                                {{s_address.lastName}}
+                                        <br/>
+                                                {{s_address.addressDetail}}
+                                            {% else %}
+                                        <h3>Shipping address:</h3>  The same as the billing address above.
+                                            {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <br/>
+                                        <h3> Shipping method: </h3>
+                                            {{order.shippingMethod.label}}
+                                        Price ${{order.shippingMethod.price}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <br/>
+                                        <h3> Payment: </h3>
+                                            {{order.paymentMethod.label}}                                        
+                                    </td>
+                                </tr>
+                        </table>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="buttons-set" id="payment-buttons-container">
+                        <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
+                    </div>
+                </div>
+        </div>
+    </li>
+</ol>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'ShopBookshopBundle::dashboard_layout.html.twig' %}
+{% block content %}
+<div class="box-account box-recent">
+    <div class="box-head">
+        <h2>Recent Orders</h2>
+    </div>
+        <table class="data-table" id="my-orders-table">
+            <col width="1" />
+            <col width="1" />
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <thead>
+                <tr class="first last">
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Ship To</th>
+                    <th><span class="nobr">Order Total</span></th>
+                    <th>Status</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders|reverse %}
+                    <tr class="first last odd">
+                        <td>{{"%1$06d"|format(order.id)}}</td>
+                        <td><span class="nobr">{{ order.date.date }}</span></td>
+                        <td>{{ order.shippingAddress.firstname }} {{ order.shippingAddress.lastname }}</td>
+                        <td><span class="price">${{ order.total }}</span></td>
+                        <td><em>{{ order.state.label }}</em></td>
+                        <td class="a-center last">
+                            <span class="nobr">
+                                <a href="{{path('shop_bookshop_dashboardViewOrder', { 'id': order.id })}}">View Order</a>
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="buttons-set" id="payment-buttons-container">
+                <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
+            </div>
+</div>
+{% endblock %}

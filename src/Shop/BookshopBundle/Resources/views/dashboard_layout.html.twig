@@ -18,6 +18,7 @@
             </div>
                <div class="col-left sidebar">
                     {% block leftSidebar %}
+                        {{ render(controller('ShopBookshopBundle:Dashboard:sidebar')) }}
                     {% endblock %}
                     {% block rightSidebar %}
                         {{ render(controller('ShopBookshopBundle:Cart:cartSidebar')) }}

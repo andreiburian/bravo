@@ -1,0 +1,84 @@
+{% extends 'ShopBookshopBundle::dashboard_layout.html.twig' %}
+{% block title %}Billing Address{% endblock%}
+{% block content %}  
+<div class="page-title">
+    <h1>Checkout</h1>
+</div>
+<ol class="opc" id="checkoutSteps">
+    <li id="opc-billing" class="section slide2 allow active">
+        <div class="step-title">
+            <h2>Billing Information</h2>
+        </div>
+        <div id="checkout-step-billing" class="step a-item">
+            <form id="co-billing-form" action="{{path('shop_bookshop_dashboardEditBillingAddress')}}" method="POST">
+                <fieldset>
+                    <ul class="form-list">
+                        <li id="billing-new-address-form">
+                            <fieldset>
+                                <input name="billing[address_id]" value="" id="billing:address_id" type="hidden">
+                                <ul>
+                                    <li class="fields">
+                                        <div class="customer-name">
+                                            <div class="field name-firstname">
+                                                <label for="billing:firstname" class="required"><em>*</em>First Name</label>
+                                                <div class="input-box">
+                                                    {{ form_widget(form.firstname, {'attr': {'class': 'input-text required-entry'} }) }}
+                                                </div>
+                                            </div>
+                                            <div class="field name-lastname">
+                                                <label for="billing:lastname" class="required"><em>*</em>Last Name</label>
+                                                <div class="input-box">
+                                                    {{ form_widget(form.lastname, { 'attr': {'class': 'input-text required-entry'} }) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="billing:email" class="required"><em>*</em>Email Address</label>
+                                            <div class="input-box">
+                                                {{ form_widget(form.email, { 'attr': {'class': 'input-text required-entry'} }) }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="wide">
+                                        <label for="billing:street1" class="required"><em>*</em>Address</label>
+                                        <div class="input-box">
+                                            {{ form_widget(form.addressDetail, { 'attr': {'class': 'input-text required-entry'} }) }}
+                                        </div>
+                                    </li>
+                                   <li class="fields">
+                                        <div class="field">
+                                            <label for="billing:country_id" class="required"><em>*</em>Country</label>
+                                            <div class="input-box">
+                                            {{ form_widget(form.country, { 'attr': {'class': 'input-text required-entry'} }) }}
+                                            </div>    
+                                        </div>
+                                    </li>
+                                    <li class="no-display"><input name="billing[save_in_address_book]" value="1" type="hidden"></li>
+                                </ul>
+                            </fieldset>
+                        </li>
+                        {% for child in form.shipTo %}
+                        <li class="control">
+                            {{ form_widget(child) }}
+                            {% if loop.index == 1 %}
+                                <label>Ship to this address </label>
+                            {% endif %}
+                            {% if loop.index == 2 %}
+                                <label>Ship to different address </label>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                        {{ form_rest(form) }}
+                    </ul>
+                    <div class="buttons-set" id="billing-buttons-container">
+                        <p class="required">* Required Fields</p>
+                        <button type="submit" title="Continue" class="button"><span><span>Continue</span></span></button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </li>
+</ol>
+{% endblock %}

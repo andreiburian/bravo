@@ -1,0 +1,69 @@
+{% extends 'ShopBookshopBundle::dashboard_layout.html.twig' %}
+{% block content %}
+<div class="account-create">
+    <div class="page-title">
+        <h1>Create an Account</h1>
+    </div>
+    <form action="{{ path('shop_bookshop_dashboardEditAccount') }}" method="post" class="fos_user_registration_register" id="form-validate">
+        <div class="fieldset">
+            <h2 class="legend">Personal Information</h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="customer-name">
+                        <div class="field name-firstname">
+                             {{ form_label(form.firstname) }}<em>*</em>
+                             <div class="input-box">
+                                {{ form_widget(form.firstname, { 'attr': {'class': 'input-text required-entry'} }) }}
+                             </div>
+                        </div>
+                        <div class="field name-lastname">
+                             {{ form_label(form.lastname) }}<em>*</em>
+                            <div class="input-box">
+                                {{ form_widget(form.lastname, { 'attr': {'class': 'input-text required-entry'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="field">
+                        {{ form_label(form.email) }}<em>*</em>
+                        <div class="input-box">
+                               {{ form_widget(form.email, { 'attr': {'class': 'input-text required-entry'} }) }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{ form_label(form.phone) }}
+                        <div class="input-box">
+                               {{ form_widget(form.phone, { 'attr': {'class': 'input-text required-entry'} }) }}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="field">
+                        {{ form_label(form.gender) }}<em>*</em>
+                        <div class="input-box">
+                           {% for child in form.gender %}
+                                    {{ form_widget(child, { 'attr': {'class': 'radio'} }) }}
+                                    {{ form_label(child) }}
+                                    <br>
+                           {% endfor %}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    {{ form_label(form.username) }}<em>*</em>
+                    <div class="input-box">
+                         {{ form_widget(form.username, { 'attr': {'class': 'input-text required-entry'} }) }}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="buttons-set">
+            <p class="required">* Required Fields</p>
+            <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
+            <button type="submit" name="submit" title="Submit" class="button" value="{{ 'registration.submit'|trans }}"><span><span>Submit</span></span></button>
+            {{  form_rest(form) }}
+        </div>
+    </form>
+</div>
+{% endblock %}

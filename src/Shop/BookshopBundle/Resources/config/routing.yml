@@ -68,4 +68,22 @@ shop_bookshop_checkoutPlaceOrder:
 
 shop_bookshop_dashboardIndex:
     pattern: /dashboard
-    defaults: { _controller: ShopBookshopBundle:Dashboard:index}           
+    defaults: { _controller: ShopBookshopBundle:Dashboard:index}
+shop_bookshop_dashboardAllOrders:
+    pattern: /dashboard/allOrders
+    defaults: { _controller: ShopBookshopBundle:Dashboard:viewAllOrders}      
+shop_bookshop_dashboardViewOrder:
+    pattern: /dashboard/viewOrder/{id}
+    defaults: { _controller: ShopBookshopBundle:Dashboard:viewOrder}   
+    requirements:
+        _method:  GET
+        id: \d+
+shop_bookshop_dashboardEditAccount:
+    pattern: /dashboard/editAccount
+    defaults: { _controller: ShopBookshopBundle:Dashboard:editAccount}       
+shop_bookshop_dashboardEditBillingAddress:    
+    pattern: /dashboard/editBillingAddress
+    defaults: { _controller: ShopBookshopBundle:Dashboard:editBillingAddress} 
+shop_bookshop_dashboardEditShippingAddress:    
+    pattern: /dashboard/editShippingAddress
+    defaults: { _controller: ShopBookshopBundle:Dashboard:editShippingAddress}     
