@@ -38,9 +38,9 @@ class CheckoutController extends Controller
         }
         
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
-        if ($orderModel == null || $orderModel->getState()->getId()==2)
+        if ($orderModel == null || $orderModel->getState()->getId()==1)
             $orderModel = new OrderModel();
-        $state = $em->getRepository('ShopBookshopBundle:State')->find(1);
+        $state = $em->getRepository('ShopBookshopBundle:State')->find(5);
 
         $request = $this->getRequest();
 
@@ -195,7 +195,7 @@ class CheckoutController extends Controller
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
-        $state = $em->getRepository('ShopBookshopBundle:State')->find(2);
+        $state = $em->getRepository('ShopBookshopBundle:State')->find(1);
         $cart = $em->getRepository('ShopBookshopBundle:Cart')->getCartByUser($userId);
         if($orderModel !=null) 
             if($orderModel->getUser()!=null)
