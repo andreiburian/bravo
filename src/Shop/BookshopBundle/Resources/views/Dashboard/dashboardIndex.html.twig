@@ -1,0 +1,134 @@
+{% extends 'ShopBookshopBundle::dashboard_layout.html.twig' %}
+{% block content %}
+<div class="dashboard">
+    <div class="page-title">
+        <h1>My Dashboard</h1>
+    </div>
+    <div class="welcome-msg">
+        <p class="hello"><strong>Hello, {{user.firstname}} {{user.lastname}}!</strong></p>
+        <p>From your My Account Dashboard you have the ability to view a
+            snapshot of your recent account activity and update your account
+            information. Select a link below to view or edit information.</p>
+    </div>
+    <div class="box-account box-recent">
+        <div class="box-head">
+            <h2>Recent Orders</h2>
+            <a href="#">View All</a>
+        </div>
+        {% if user.order|length == 0 %}{% set orders = null %}
+        {% else %}               {% set orders = user.order %}   
+        {% endif %}
+        {% if orders == null %}{{'You have no orders'}}{% else %}
+        <table class="data-table" id="my-orders-table">
+            <col width="1" />
+            <col width="1" />
+            <col />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <thead>
+                <tr class="first last">
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Ship To</th>
+                    <th><span class="nobr">Order Total</span></th>
+                    <th>Status</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="first last odd">
+                    <td>{{ order.id }}</td>
+                    <td><span class="nobr">{{ order.date.date }}</span></td>
+                    <td>{{ order.shippingAddress.firstname }} {{ order.shippingAddress.lastname }}</td>
+                    <td><span class="price">${{ order.total }}</span></td>
+                    <td><em>{{ order.state.label }}</em></td>
+                    <td class="a-center last">
+                        <span class="nobr">
+                            <a href="#">View Order</a>
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <div class="box-account box-info">
+        <div class="box-head">
+            <h2>Account Information</h2>
+        </div>
+        <div class="col2-set">
+            <div class="col-1">
+                <div class="box">
+                    <div class="box-title">
+                        <h3>Contact Information</h3>
+                        <a href="#">Edit</a>
+                    </div>
+                    <div class="box-content">
+                        <p>
+                            {{user.firstname}} {{user.lastname}}<br />
+                            {{user.email}}<br />
+                            {{user.phone}}<br />
+                            {% if(user.gender) == 0 %} {{'Male'}} {% else %} {{'Female'}} {% endif %} <br/>
+                            {{user.username}}<br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% set billing, shipping = user.billingAddress, user.shippingAddress %}
+        <div class="col2-set">
+            <div class="box">
+                <div class="box-title">
+                    <h3>Address Book</h3>
+                </div>
+                <div class="box-content">
+                    <div class="col-1">
+                        <h4>Billing Address</h4>
+                        <address>
+                        {% if billing == null %}{{'No billing address set.'}}{% else %}
+                            {{billing.firstname}} {{billing.lastname}}<br />
+                            {{billing.addressDetail}}<br />
+                            {{billing.country}}<br />
+                            {{billing.email}}
+                        {% endif %}<br/>
+                            <a href="#">Edit Address</a>
+                        </address>
+                    </div>
+                    <div class="col-2">
+                        <h4>Shipping Address</h4>
+                        <address>
+                        {% if shipping == null %}{{'No shipping address set.'}}{% else %}
+                            {{shipping.firstname}} {{shipping.lastname}}<br />
+                            {{shipping.addressDetail}}<br />
+                            {{shipping.country}}<br />
+                            {{shipping.email}}
+                        {% endif %}<br/>
+                            <a href="#">Edit Address</a>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block leftSidebar %}
+<div class="block block-account">
+    <div class="block-title">
+        <strong><span>My Account</span></strong>
+    </div>
+    <div class="block-content">
+        <ul>
+            <li class="current"><strong>Account Dashboard</strong></li>
+            <li><a href="#">Account Information</a></li>
+            <li><a href="#">My Orders</a></li>
+            <li><a href="#">Billing address</a></li>
+            <li class="last"><a href="#">Shipping address</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -22,7 +22,9 @@
                </div>
         </div>
         {% block rightSidebar %}
-        {{ render(controller('ShopBookshopBundle:Cart:cartSidebar')) }}
+        <div class="col-right sidebar">   
+            {{ render(controller('ShopBookshopBundle:Cart:cartSidebar')) }}
+        </div>
         {% endblock %}
     </div>
 </div>

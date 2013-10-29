@@ -28,7 +28,7 @@ class Builder extends ContainerAware
         $menu->addChild('Home', array('route' => 'shop_bookshop_homepage'));
         $menu->addChild('My cart', array('route' => 'shop_bookshop_cart'));
         $menu->addChild('Checkout', array('route' => 'shop_bookshop_checkoutStep1'));
-        $menu->addChild('My Account', array('route' => 'shop_bookshop_homepage'));
+        $menu->addChild('My Account', array('route' => 'shop_bookshop_dashboardIndex'));
         $menu->addChild('Logout', array('route' => 'fos_user_security_logout'));
 
         return $menu;

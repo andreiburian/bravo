@@ -1,9 +1,8 @@
 {% extends '::base.html.twig' %}
 
-
 {% block container %}
 
-<div class="main-container col1-layout">
+<div class="main-container col2-left-layout">
     <div class="main">
         <div class="col-wrapper">
 
@@ -17,11 +16,13 @@
                     {% endblock %}
                  </div>
             </div>
-        </div>
-        <div class="col-right sidebar">    
-            {% block rightSidebar %}
-            {{ render(controller('ShopBookshopBundle:Cart:cartSidebar')) }}
-            {% endblock %}
+               <div class="col-left sidebar">
+                    {% block leftSidebar %}
+                    {% endblock %}
+                    {% block rightSidebar %}
+                        {{ render(controller('ShopBookshopBundle:Cart:cartSidebar')) }}
+                    {% endblock %}
+               </div>
         </div>
     </div>
 </div>

@@ -65,3 +65,7 @@ shop_bookshop_checkoutCancelOrder:
 shop_bookshop_checkoutPlaceOrder:
     pattern: /checkout/placeOrder
     defaults: { _controller: ShopBookshopBundle:Checkout:placeOrder}              
+
+shop_bookshop_dashboardIndex:
+    pattern: /dashboard
+    defaults: { _controller: ShopBookshopBundle:Dashboard:index}           

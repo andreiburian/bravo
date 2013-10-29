@@ -1,50 +1,48 @@
-<div class="col-right sidebar">
-    <div class="block block-cart">
-        <div class="block-title">
-            <strong><span>My Cart</span></strong>
-        </div>
+<div class="block block-cart">
+    <div class="block-title">
+        <strong><span>My Cart</span></strong>
+    </div>
             {% if cart|length == 0 %}{% set noItems = 0 %}
             {% else %}               {% set noItems = cart.cartItems|length %}   
             {% endif %}
-        <div class="block-content">
-        
-        {% if noItems == 0 %}
-            <p class="empty">You have no items in your shopping cart.</p>
-        {% else %}   
-            <div class="summary">
-                <p class="amount">There are <a href="{{ path('shop_bookshop_cart') }}">{{noItems}} items</a> in your cart.</p>
-                <p class="subtotal">
-                    <span class="label">Cart Subtotal:</span> <span class="price">{{ cart.total }}</span>
-                </p>
-            </div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}    
-            <div class="actions">
-                <a href="{{path('shop_bookshop_checkoutStep1')}}">
-                <button type="button" title="Checkout" class="button" ><span><span>Checkout</span></span></button>
-                </a>
-            </div>
-            {% endif %} 
-            <p class="block-subtitle">Recently added item(s)</p>
+    <div class="block-content">
 
-            <ol id="cart-sidebar" class="mini-products-list">
+        {% if noItems == 0 %}
+        <p class="empty">You have no items in your shopping cart.</p>
+        {% else %}   
+        <div class="summary">
+            <p class="amount">There are <a href="{{ path('shop_bookshop_cart') }}">{{noItems}} items</a> in your cart.</p>
+            <p class="subtotal">
+                <span class="label">Cart Subtotal:</span> <span class="price">{{ cart.total }}</span>
+            </p>
+        </div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}    
+        <div class="actions">
+            <a href="{{path('shop_bookshop_checkoutStep1')}}">
+                <button type="button" title="Checkout" class="button" ><span><span>Checkout</span></span></button>
+            </a>
+        </div>
+            {% endif %} 
+        <p class="block-subtitle">Recently added item(s)</p>
+
+        <ol id="cart-sidebar" class="mini-products-list">
                 {% set limit=0 %}
                 {% if noItems>3 %}{% set limit=noItems-3 %}{% endif %}
                 {% for i in range( noItems-1, limit) %}
-                    <li class="item">
-                        <a href="#" title="{{ cart.cartItems[i].title }}" class="product-image">
-                            <img src={{ asset('bundles/shopbookshop/image/'~cart.cartItems[i].product.image) }} width="50" height="50" alt="{{ cart.cartItems[i].title }}" />
-                        </a>
-                        <div class="product-details">
-                            <a href="{{ path('shop_bookshop_removeProduct',{'cartItemId': cart.cartItems[i].id}) }}" title="Remove This Item" class="btn-remove">Remove This Item</a>
-                            <a href="{{ path('shop_bookshop_cart') }}" title="Edit item" class="btn-edit">Edit item</a>
-                            <p class="product-name"><a href="#">{{ cart.cartItems[i].title }}</a></p>
-                            <strong>{{ cart.cartItems[i].quantity }}</strong> x
-                            <span class="price">{{ cart.cartItems[i].price}} US$</span>
-                        </div>
-                    </li>
+                <li class="item">
+                    <a href="#" title="{{ cart.cartItems[i].title }}" class="product-image">
+                        <img src={{ asset('bundles/shopbookshop/image/'~cart.cartItems[i].product.image) }} width="50" height="50" alt="{{ cart.cartItems[i].title }}" />
+                    </a>
+                    <div class="product-details">
+                        <a href="{{ path('shop_bookshop_removeProduct',{'cartItemId': cart.cartItems[i].id}) }}" title="Remove This Item" class="btn-remove">Remove This Item</a>
+                        <a href="{{ path('shop_bookshop_cart') }}" title="Edit item" class="btn-edit">Edit item</a>
+                        <p class="product-name"><a href="#">{{ cart.cartItems[i].title }}</a></p>
+                        <strong>{{ cart.cartItems[i].quantity }}</strong> x
+                        <span class="price">{{ cart.cartItems[i].price}} US$</span>
+                    </div>
+                </li>
                 {% endfor %}
-            </ol>
-        {% endif %}    
-        </div>
+        </ol>
+    {% endif %}    
     </div>
-</div>   
+</div>
