@@ -61,6 +61,14 @@ class Address
         $this->shipTo = $shipTo;
     }
     
+    public function copyAddress($address)
+    {
+        $this->setAddressDetail($address->getAddressDetail());
+        $this->setCountry($address->getCountry());
+        $this->setFirstname($address->getFirstname());
+        $this->setLastname($address->getLastname());
+        $this->setEmail($address->getEmail());
+    }
     
     /**
      * Get id
