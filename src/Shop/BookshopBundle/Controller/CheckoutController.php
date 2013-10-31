@@ -12,14 +12,15 @@ use Shop\BookshopBundle\Form\Type\BillingFormType;
 use Shop\BookshopBundle\Form\Type\ShippingFormType;
 use Shop\BookshopBundle\Form\Type\ShippingMethodFormType;
 use Shop\BookshopBundle\Form\Type\PaymentMethodFormType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CheckoutController extends Controller
 {
 
     public function step1Action()
     {
-        $userId = (is_null($this->getUser()) ? 0 : $this->getUser()->getId() );
-        $user = $this->getUser();
+        $user = $this->checkUser();
+        $userId = $user->getId();
         if ($userId == 0){
             return $this->redirect($this->generateUrl('shop_bookshop_homepage'));
         }
@@ -75,7 +76,7 @@ class CheckoutController extends Controller
 
     public function step2Action()
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
@@ -110,7 +111,7 @@ class CheckoutController extends Controller
 
     public function step3Action()
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $shippingMethod = $em->getRepository('ShopBookshopBundle:ShippingMethod')->findAll();
@@ -135,7 +136,7 @@ class CheckoutController extends Controller
 
     public function step4Action()
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $paymentMethod = $em->getRepository('ShopBookshopBundle:PaymentMethod')->findAll();
@@ -161,7 +162,7 @@ class CheckoutController extends Controller
 
     public function step5Action()
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
@@ -176,7 +177,7 @@ class CheckoutController extends Controller
     
     public function cancelOrderAction($orderId)
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->find($orderId);
         if($orderModel !=null) 
@@ -191,7 +192,7 @@ class CheckoutController extends Controller
     
     public function placeOrderAction()
     {
-        $user = $this->getUser();
+        $user = $this->checkUser();
         $userId = $user->getId();
         $em = $this->getDoctrine()->getManager();
         $orderModel = $em->getRepository('ShopBookshopBundle:OrderModel')->getOrderByUser($userId);
@@ -216,5 +217,12 @@ class CheckoutController extends Controller
                 }
         return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep6'));
     }
-
+    private function checkUser()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) ) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+        return $user;
+    }
 }
