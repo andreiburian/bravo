@@ -4,6 +4,7 @@ namespace Shop\BookshopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class AccountFormType extends AbstractType
 {
@@ -12,7 +13,9 @@ class AccountFormType extends AbstractType
         $builder->add('firstname', 'text')
                 ->add('lastname', 'text')
                 ->add('email', 'email')
-                ->add('phone', 'text')
+                ->add('phone', 'text', array(
+                    'constraints' => new Length(array('min' => 10)),
+                ))
                 ->add('username', 'text')
                 ->add('gender', 'choice', array(
                 'choices' => array('0' => 'Male', '1' => 'Female'),

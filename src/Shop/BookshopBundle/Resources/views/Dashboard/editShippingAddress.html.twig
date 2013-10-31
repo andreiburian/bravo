@@ -2,7 +2,7 @@
 {% block title %}Shipping Address{% endblock%}
 {% block content %} 
 <div class="page-title">
-    <h1>Checkout</h1>
+    <h1>Dashboard</h1>
 </div>
 <ol class="opc" id="checkoutSteps">
     <li id="opc-shipping" class="section slide3 allow active">
@@ -10,22 +10,22 @@
             <h2>Shipping Information</h2>
         </div>
         <div id="checkout-step-shipping" class="step a-item">
-            <form id="co-billing-form" action="{{path('shop_bookshop_checkoutStep2')}}" method="POST">
+            <form id="co-shipping-form" action="{{path('shop_bookshop_dashboardEditShippingAddress')}}" method="POST">
                 <ul class="form-list">
-                        <li id="billing-new-address-form">
+                        <li id="shipping-new-address-form">
                             <fieldset>
-                                <input name="billing[address_id]" value="" id="billing:address_id" type="hidden">
+                                <input name="shipping[address_id]" value="" id="shipping:address_id" type="hidden">
                                 <ul>
                                     <li class="fields">
                                         <div class="customer-name">
                                             <div class="field name-firstname">
-                                                <label for="billing:firstname" class="required"><em>*</em>First Name</label>
+                                                <label for="shipping:firstname" class="required"><em>*</em>First Name</label>
                                                 <div class="input-box">
                                                     {{ form_widget(form.firstname, {'attr': {'class': 'input-text required-entry'} }) }}
                                                 </div>
                                             </div>
                                             <div class="field name-lastname">
-                                                <label for="billing:lastname" class="required"><em>*</em>Last Name</label>
+                                                <label for="shipping:lastname" class="required"><em>*</em>Last Name</label>
                                                 <div class="input-box">
                                                     {{ form_widget(form.lastname, { 'attr': {'class': 'input-text required-entry'} }) }}
                                                 </div>
@@ -34,39 +34,35 @@
                                     </li>
                                     <li class="fields">
                                         <div class="field">
-                                            <label for="billing:email" class="required"><em>*</em>Email Address</label>
+                                            <label for="shipping:email" class="required"><em>*</em>Email Address</label>
                                             <div class="input-box">
                                                 {{ form_widget(form.email, { 'attr': {'class': 'input-text required-entry'} }) }}
                                             </div>
                                         </div>
                                     </li>
                                     <li class="wide">
-                                        <label for="billing:street1" class="required"><em>*</em>Address</label>
+                                        <label for="shipping:street1" class="required"><em>*</em>Address</label>
                                         <div class="input-box">
                                             {{ form_widget(form.addressDetail, { 'attr': {'class': 'input-text required-entry'} }) }}
                                         </div>
                                     </li>
                                    <li class="fields">
                                         <div class="field">
-                                            <label for="billing:country_id" class="required"><em>*</em>Country</label>
+                                            <label for="shipping:country_id" class="required"><em>*</em>Country</label>
                                             <div class="input-box">
                                             {{ form_widget(form.country, { 'attr': {'class': 'input-text required-entry'} }) }}
                                             </div>    
                                         </div>
                                     </li>
-                                    <li class="no-display"><input name="billing[save_in_address_book]" value="1" type="hidden"></li>
+                                    <li class="no-display"><input name="shipping[save_in_address_book]" value="1" type="hidden"></li>
                                 </ul>
                             </fieldset>
                         </li>
-                    <li class="control">
-                        {{ form_widget(form.shipTo, { 'attr': {'class': 'checkbox'} }) }}
-                        {{ form_label(form.shipTo) }}    
-                    </li>
-                    {{ form_rest(form) }}
                 </ul>
-                <div class="buttons-set" id="billing-buttons-container">
+                {{ form_widget(form._token)  }}    
+                <div class="buttons-set" id="shipping-buttons-container">
                     <p class="required">* Required Fields</p>
-                    <p class="back-link"><a href="javascript: window.location = '{{path('shop_bookshop_checkoutStep1')}}';" ><small>« </small>Back</a></p>
+                    <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
                     <button type="submit" title="Continue" class="button"><span><span>Continue</span></span></button>
                 </div>
             </form>

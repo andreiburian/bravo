@@ -2,7 +2,7 @@
 {% block title %}Billing Address{% endblock%}
 {% block content %}  
 <div class="page-title">
-    <h1>Checkout</h1>
+    <h1>Dashboard</h1>
 </div>
 <ol class="opc" id="checkoutSteps">
     <li id="opc-billing" class="section slide2 allow active">
@@ -59,21 +59,11 @@
                                 </ul>
                             </fieldset>
                         </li>
-                        {% for child in form.shipTo %}
-                        <li class="control">
-                            {{ form_widget(child) }}
-                            {% if loop.index == 1 %}
-                                <label>Ship to this address </label>
-                            {% endif %}
-                            {% if loop.index == 2 %}
-                                <label>Ship to different address </label>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                        {{ form_rest(form) }}
                     </ul>
-                    <div class="buttons-set" id="billing-buttons-container">
+                    {{ form_widget(form._token)  }}
+                    <div class="buttons-set" id="shipping-buttons-container">
                         <p class="required">* Required Fields</p>
+                        <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
                         <button type="submit" title="Continue" class="button"><span><span>Continue</span></span></button>
                     </div>
                 </fieldset>

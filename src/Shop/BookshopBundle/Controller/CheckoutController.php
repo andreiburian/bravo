@@ -82,7 +82,7 @@ class CheckoutController extends Controller
         $shippingAddress = new Address();
         if ($user->getShippingAddress() != null) {
             $oldShippingAddress = $user->getShippingAddress();
-            $this->copyAddress($oldShippingAddress, $shippingAddress);
+            $shippingAddress->copyAddress($oldShippingAddress);
         }
         $request = $this->getRequest();
         $form = $this->createForm(new ShippingFormType(), $shippingAddress);
@@ -217,12 +217,4 @@ class CheckoutController extends Controller
         return $this->redirect($this->generateUrl('shop_bookshop_checkoutStep6'));
     }
 
-    private function copyAddress($from, $to)
-    {
-        $to->setAddressDetail($from->getAddressDetail());
-        $to->setCountry($from->getCountry());
-        $to->setFirstname($from->getFirstname());
-        $to->setLastname($from->getLastname());
-        $to->setEmail($from->getEmail());
-    }
 }

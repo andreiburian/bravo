@@ -36,6 +36,9 @@
                         <div class="input-box">
                                {{ form_widget(form.phone, { 'attr': {'class': 'input-text required-entry'} }) }}
                         </div>
+                        {% if form_errors(form.phone) %}
+                            <div class="validation-advice">{{form_errors(form.phone)}}</div>
+                        {% endif %}    
                     </div>
                 </li>
                 <li>
@@ -61,7 +64,7 @@
         <div class="buttons-set">
             <p class="required">* Required Fields</p>
             <p class="back-link" ><a href="javascript: history.go(-1)"><small>« </small>Back</a></p>
-            <button type="submit" name="submit" title="Submit" class="button" value="{{ 'registration.submit'|trans }}"><span><span>Submit</span></span></button>
+            <button type="submit" name="submit" title="Submit" class="button" ><span><span>Submit</span></span></button>
             {{  form_rest(form) }}
         </div>
     </form>

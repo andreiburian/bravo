@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Shop\BookshopBundle\Entity\Address;
 use Shop\BookshopBundle\Form\Type\AccountFormType;
 use Shop\BookshopBundle\Form\Type\BillingFormType;
 use Shop\BookshopBundle\Form\Type\ShippingFormType;
@@ -38,28 +39,72 @@ class DashboardController extends Controller
     public function editAccountAction(Request $request)
     {
         $user = $this->checkUser();
+        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(new AccountFormType(), $user);
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            //process form - update user
         }
-        
+        if ($form->isValid()) {
+            $em->persist($user);
+            $em->flush($user);
+            return $this->redirect($this->generateUrl('shop_bookshop_dashboardIndex'));
+        }
         return $this->render('ShopBookshopBundle:Dashboard:editAccount.html.twig', array('form' => $form->createView()));
     }
-    public function editBillingAddressAction()
+    public function editBillingAddressAction(Request $request)
     {
         $user = $this->checkUser();
+        $em = $this->getDoctrine()->getManager();
         $billingAddress = $user->getBillingAddress();
         $form = $this->createForm(new BillingFormType(), $billingAddress);
-        
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+        }
+        if ($form->isValid()) {
+           if($billingAddress->getId() == $user->getShippingAddress()->getId() )
+            {   
+                $newBillingAddress = new Address();
+                $newBillingAddress->copyAddress($billingAddress);
+                $user->setBillingAddress($newBillingAddress);
+                $em->persist($newBillingAddress);
+                $em->flush($newBillingAddress);
+                $em->persist($user);
+                $em->flush($user);
+            }
+            else{
+            $em->persist($billingAddress);
+            $em->flush($billingAddress);
+            }
+            return $this->redirect($this->generateUrl('shop_bookshop_dashboardIndex'));
+        }
         return $this->render('ShopBookshopBundle:Dashboard:editBillingAddress.html.twig', array('form' => $form->createView()));
     }
-    public function editShippingAddressAction()
+    public function editShippingAddressAction(Request $request)
     {
         $user = $this->checkUser();
+        $em = $this->getDoctrine()->getManager();
         $shippingAddress = $user->getShippingAddress();
         $form = $this->createForm(new ShippingFormType(), $shippingAddress);
-        
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+        }
+        if ($form->isValid()) {
+            if($shippingAddress->getId() == $user->getBillingAddress()->getId() )
+            {   
+                $newShippingAddress = new Address();
+                $newShippingAddress->copyAddress($shippingAddress);
+                $user->setShippingAddress($newShippingAddress);
+                $em->persist($newShippingAddress);
+                $em->flush($newShippingAddress);
+                $em->persist($user);
+                $em->flush($user);
+            }
+            else{
+            $em->persist($shippingAddress);
+            $em->flush($shippingAddress);
+            }
+            return $this->redirect($this->generateUrl('shop_bookshop_dashboardIndex'));
+        }
         return $this->render('ShopBookshopBundle:Dashboard:editShippingAddress.html.twig', array('form' => $form->createView()));
     }
     private function checkUser()
@@ -70,5 +115,4 @@ class DashboardController extends Controller
         }
         return $user;
     }
-
 }
